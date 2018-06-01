@@ -1,0 +1,38 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+// Variables
+@import "variables";
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~vali-admin/src/sass/main';
+
+.navbar-laravel {
+  background-color: #999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+$item-height: 2.5em;
+$border-color: rgba(128, 128, 128, .5);
+.sortable-list {
+  background-color: $border-color;
+  padding: .1px 0;
+  display: block;
+}
+
+.sortable {
+  line-height: $item-height;
+  margin: 1px;
+  padding: 0 1em;
+  background-color: white;
+  cursor: move;
+  list-style: none;
+}
+
+.sortable-ghost {
+  opacity: .2;
+}
+
+.parent {
+  padding-bottom: 1em;
+}
+
