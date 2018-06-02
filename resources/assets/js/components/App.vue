@@ -7,7 +7,7 @@
 
 <script>
     import ClientTemplate from './client/ClientTemplate'
-    import AdminTemplate from './Admin/AdminTemplate'
+    import AdminTemplate from './admin/AdminTemplate'
     export default {
         name: "app",
         components: {
