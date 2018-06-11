@@ -1,6 +1,7 @@
 // initial state
 const state = {
-    accessToken: ''
+    accessToken: '',
+    user: null
 }
 
 // getters

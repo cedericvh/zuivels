@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model {
 
-    protected $fillable = ['title', 'description', 'image'];
+    protected $fillable = ['title', 'description', 'image', 'sorting_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder {
      */
     public function run() {
         $this->call(CategoriesSeeder::class);
+        $this->call(ProductTableSeeder::class);
+        //        $this->call(RoleTableSeeder::class);
+        //        $this->call(UserTableSeeder::class);
 
         $this->command->info('Categories table seeded!');
     }
@@ -20,30 +23,43 @@ class DatabaseSeeder extends Seeder {
 class CategoriesSeeder extends Seeder {
 
     public function run() {
-
-        $categories = [
+        Category::truncate();
+        Category::buildTree([
             [
-                'id' => 1, 'title' => 'Productgroepen', 'children' => [
-                [
-                    'id' => 2, 'title' => 'Zuivel', 'children' => [
-                    ['id' => 3, 'title' => 'Melkproducten in fles'],
-                    ['id' => 4, 'title' => 'Melkproducten in brik']
+                'id'         => 1,
+                'title'      => 'Productgroepen',
+                'sorting_id' => 1,
+                'children'   => [
+                    [
+                        'id'         => 2,
+                        'title'      => 'Zuivel',
+                        'sorting_id' => 2,
+                        'children'   => [
+                            [
+                                'id'         => 3,
+                                'title'      => 'Melkproducten in fles',
+                                'sorting_id' => 3,
+                            ],
+                            [
+                                'id'         => 4,
+                                'title'      => 'Melkproducten in brik',
+                                'sorting_id' => 4,
+                            ]
+                        ]
+                    ],
+                    [
+                        'id'         => 5,
+                        'title'      => 'Water',
+                        'sorting_id' => 5,
+                    ],
+                    [
+                        'id'         => 6,
+                        'title'      => 'Frisdranken',
+                        'sorting_id' => 6,
+                    ]
                 ]
-                ],
-                ['id' => 5, 'title' => 'Water'],
-                ['id' => 6, 'title' => 'Frisdranken']
-            ]
             ],
-        ];
-
-        Category::buildTree($categories); // => true
-        // Product seeder will use the roles above created.
-        $this->call(ProductTableSeeder::class);
-
-        // Role comes before User seeder here.
-        $this->call(RoleTableSeeder::class);
-        // User seeder will use the roles above created.
-        $this->call(UserTableSeeder::class);
+        ]);
 
     }
 

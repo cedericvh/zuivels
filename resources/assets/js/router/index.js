@@ -13,7 +13,12 @@ import AdminHome from '../components/admin/Home.vue'
 import AdminProducts from '../components/admin/products/Products.vue'
 import ProductsEdit from '../components/admin/products/ProductsEdit.vue'
 import ProductsCreate from '../components/admin/products/ProductsCreate.vue'
+import ProductsImport from '../components/admin/products/ProductsImport.vue'
 import Categories from '../components/admin/categories/Categories.vue'
+import Users from '../components/admin/users/Users.vue'
+import UsersCreate from '../components/admin/users/UsersCreate.vue'
+import UsersEdit from '../components/admin/users/UsersEdit.vue'
+import Orders from '../components/admin/orders/Orders.vue'
 
 Vue.use(VueRouter)
 
@@ -33,9 +38,14 @@ const router = new VueRouter({
         {path: '/admin/products', component: AdminProducts, meta: {admin: true}},
         {path: '/admin/products/create', component: ProductsCreate, meta: {admin: true}},
         {path: '/admin/products/:id/edit', component: ProductsEdit, meta: {admin: true}, props: true},
-        {path: '/admin/categories', component: Categories, meta: {admin: true}}
+        {path: '/admin/categories', component: Categories, meta: {admin: true}},
+        {path: '/admin/users', component: Users, meta: {admin: true}},
+        {path: '/admin/users/create', component: UsersCreate, meta: {admin: true}},
+        {path: '/admin/users/:id/edit', component: UsersEdit, meta: {admin: true}, props: true},
+        {path: '/admin/orders', component: Orders, meta: {admin: true}},
+        {path: '/admin/products/import', component: ProductsImport, meta: {admin: true}},
     ],
-    linkExactActiveClass: 'active'
+    // linkExactActiveClass: 'active'
 })
 
 router.beforeResolve((to, from, next) => {

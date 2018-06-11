@@ -20,9 +20,8 @@ class CallapiController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function apiAttachToCategory($product_id, $category_id) {
-        $category = Category::find($category_id);
         $product = Product::find($product_id);
-        $product->categories()->attach($category);
+        $product->categories()->sync(explode(',',$category_id));
     }
 
     /**
@@ -31,7 +30,7 @@ class CallapiController extends Controller {
      */
     public function apiFetchAttachedCategories($product_id) {
         $product = Product::find($product_id);
-        $categories = $product->categories('title')->pluck('id');
+        $categories = $product->categories;
 
         return response()->json([
             'status'     => 200,

@@ -12,7 +12,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderUpdated implements ShouldBroadcast{
+class OrderCreated implements ShouldBroadcast {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
@@ -21,22 +21,25 @@ class OrderUpdated implements ShouldBroadcast{
      * @var User
      */
     public $user;
+    public $orders;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user) {
+    public function __construct(User $user, $orders) {
         $this->user = $user;
+        $this->orders = $orders;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return \Illuminate\Broadcasting\Channel
      */
     public function broadcastOn() {
         return new PrivateChannel('orders');
     }
 }
+

@@ -16,6 +16,7 @@
                 <div class="tile">
                     <h3 class="tile-title">Producten
                         <router-link to="/admin/products/create" class="btn btn-link float-right">Product aanmaken</router-link>
+                        <router-link to="/admin/products/import" class="btn btn-link float-right">Import Products</router-link>
                     </h3>
                     <table class="table">
                         <thead>
@@ -25,22 +26,22 @@
                             <th></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr v-for="product in products">
-                            <td>
-                                <router-link :to="`/admin/products/${product.id}`">
-                                    {{ product.title }}
-                                </router-link>
-                            </td>
-                            <td>
-                                <product-category-select :product="product.id"></product-category-select>
-                            </td>
-                            <td class="text-right">
-                                <router-link :to="`/admin/products/${product.id}/edit`">Aanpassen</router-link>
-                                <a href="" @click.prevent="remove(product.id)">Verwijderen</a>
-                            </td>
-                        </tr>
-                        </tbody>
+                        <draggable class="cursor-pointer" v-model="products" element="tbody" :options="options" @sort="sorted">
+                            <tr v-for="product in products" :key="product.id">
+                                <td>
+                                    <router-link :to="`/admin/products/${product.id}`">
+                                        {{ product.title }}
+                                    </router-link>
+                                </td>
+                                <td>
+                                    <product-category-select :product="product" :categories="categories"></product-category-select>
+                                </td>
+                                <td class="text-right">
+                                    <router-link :to="`/admin/products/${product.id}/edit`">Aanpassen</router-link>
+                                    <a href="" @click.prevent="remove(product.id)">Verwijderen</a>
+                                </td>
+                            </tr>
+                        </draggable>
                     </table>
                 </div>
             </div>
@@ -50,12 +51,25 @@
 
 <script>
     import ProductCategorySelect from './ProductCategorySelect'
+    import Draggable from 'vuedraggable'
+
     export default {
         name: "Products",
-        components: {
-            ProductCategorySelect
+        data() {
+            return {
+                options: {
+                    sort: true,
+                    group: 'sorting'
+                },
+                categories: [],
+                curPage: 1
+            }
         },
-        methods:{
+        components: {
+            ProductCategorySelect,
+            Draggable
+        },
+        methods: {
             remove(id) {
                 axios.delete(`/products/${id}`)
                 .then(response => {
@@ -63,19 +77,42 @@
                         this.$store.dispatch('getAllProducts')
                     }
                 })
+            },
+            sorted(e) {
+                axios.get(`/products/sort/${e.oldIndex + 1}/${e.newIndex + 1}`)
+            },
+            fetchcategories() {
+                axios.get('/cats')
+                .then(response => this.categories = response.data.categories[1].children)
+                .catch(response => console.log(response.data))
+            },
+            changePage(page) {
+                this.curPage = page
+                this.$store.dispatch('getAllProducts', page)
             }
         },
         computed: {
-            products() {
-                return this.$store.getters.allProducts
+            products: {
+                get() {
+                    return this.$store.getters.allProducts
+                },
+                set(value) {
+                    this.$store.dispatch('sort', value)
+                }
+            },
+            paginateData() {
+                return this.$store.getters.paginateData
             }
         },
         created() {
-            this.$store.dispatch('getAllProducts')
+            this.fetchcategories()
+            this.$store.dispatch('getAllProducts', this.curPage)
         }
     }
 </script>
 
 <style scoped>
-
+    .cursor-pointer {
+        cursor: pointer;
+    }
 </style>

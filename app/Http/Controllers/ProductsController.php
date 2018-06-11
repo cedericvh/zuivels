@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Http\Requests\ProductsRequest as Request;
+use App\Http\Requests\ProductsRequest;
+use function compact;
+use function dump;
+use Illuminate\Http\Request;
+use Excel;
+use function is_int;
 
 class ProductsController extends Controller {
 
@@ -18,8 +23,7 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function index() {
-        $products = $this->model->get();
-//        $products = $this->model->latest()->paginate(5);
+        $products = $this->model->orderBy('sorting_id', 'ASC')->with('categories')->get()/*->paginate(10)*/;
         return response()->json(compact('products'));
     }
 
@@ -38,7 +42,7 @@ class ProductsController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request) {
+    public function store(ProductsRequest $request) {
         $model = $this->model->create($request->all());
         return response()->json(['success' => $model ? true : false]);
 
@@ -48,7 +52,7 @@ class ProductsController extends Controller {
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function show($id) {
         $product = $this->model->whereId($id)->first();
@@ -72,7 +76,7 @@ class ProductsController extends Controller {
      * @param  int                      $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id) {
+    public function update(ProductsRequest $request, $id) {
         $success = $this->model->whereId($id)->update($request->all());
         return response()->json(compact('success'));
     }
@@ -89,6 +93,22 @@ class ProductsController extends Controller {
     }
 
     /**
+     * @param $oldId
+     * @param $newId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sort($oldId, $newId) {
+        $product = $this->model->whereSortingId($oldId)->first();
+        $result = $product->update(['sorting_id' => $newId]);
+        $query = $this->model->whereBetween('sorting_id', ($oldId < $newId ? [$oldId, $newId] : [$newId, $oldId]))
+            ->where('id', '!=', $product->id);
+        if ($oldId > $newId) $query->increment('sorting_id');
+        else $query->decrement('sorting_id');
+
+        return response()->json(['success' => $result]);
+    }
+
+    /**
      * Attaches Product to category.
      *
      * @param  int $product
@@ -96,17 +116,15 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function apiAttachToCategory($product, $category) {
-        //
-        //$job->delete();
         $cat = Category::find($category);
-        //$category = Category::roots()->first();
         $pr = Product::find($product);
         $pr->categories()->attach($cat);
-
-        //return redirect(route('admin.products.index'))
-        //        ->with('success', $pr,$cat);
     }
 
+    /**
+     * @param $product
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function apiFetchAttachedCategories($product) {
         $pr = Product::find($product);
         $categories = $pr->categories('title')->pluck('title');
@@ -115,5 +133,78 @@ class ProductsController extends Controller {
             'status'     => 200,
             'categories' => $categories
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function upload(Request $request) {
+        $file = $request->file('sheet');
+        $products = [];
+        $cat = '';
+        $sub = '';
+        Excel::load($file)->noHeading()->each(function ($row) use (&$products, &$cat, &$sub) {
+            if ($row[5]) {
+                $product = ['title' => $row[5], 'image' => $row[6]];
+                if ($row[1]) {
+                    $cat = $row[1];
+                    $products[$cat] = [];
+                    if (!$row[3]) {
+                        $sub = 'no_sub';
+                    }
+                };
+                if ($row[3] && $sub != 'no_sub') {
+                    $sub = $row[3];
+                    $products[$cat][$sub] = [];
+                };
+                if ($sub && $sub != 'no_sub') {
+                    $products[$cat][$sub][] = $product;
+                } else {
+                    $products[$cat][] = $product;
+                }
+            }
+        });
+        return response()->json(compact('products'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function save(Request $request) {
+        $products = $request->all();
+        $sortingId = $this->model->orderBy('sorting_id', 'DESC')->pluck('sorting_id')->first() ?:1;
+        foreach ($products as $catName => $cat) {
+            $newCat = $this->saveCategory($catName);
+            foreach ($cat as $subName => $item) {
+                if (is_int($subName)) {
+                    $product = $this->saveProduct($item, $sortingId);
+                    $product->categories()->attach($newCat);
+                } else {
+                    $newCat = $this->saveCategory($subName, $catName);
+                    foreach ($item as $subItem) {
+                        $product = $this->saveProduct($subItem, $sortingId);
+                        $product->categories()->attach($newCat);
+                    }
+                }
+                $success = $product ? true : false;
+            }
+        }
+        return response()->json(compact('success'));
+    }
+
+    public function saveCategory($name, $parent = null) {
+        $exists = Category::whereTitle($name)->first();
+        if ($exists) return $exists;
+        $base = $parent !== null ? Category::whereTitle($parent)->first() : Category::whereTitle('Productgroepen')->first();
+        return $base->children()->create(['title' => $name]);
+    }
+
+    public function saveProduct($item, &$sortingId) {
+        $item['description'] = '';
+        $item['image'] = $item['image'] ?: '';
+        $item['sorting_id'] = ++$sortingId;
+        return $this->model->create($item);
     }
 }

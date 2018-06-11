@@ -25,12 +25,18 @@ Route::middleware('auth:api')->group(function ($router) {
     $router->post('/attachtocategory/{product}/{category}', 'Api\CallapiController@apiAttachToCategory')->name('admin.products.attachtocategory');
     $router->get('/fetchattachedcategories/{product}', 'Api\CallapiController@apiFetchAttachedCategories')->name('admin.products.fetchattachedcategories');
     $router->resource('/products', 'ProductsController')->only(['index', 'show']);
+    $router->resource('/orders', 'OrdersController')->only(['store']);
 
     $router->group(['middleware' => 'admin'], function ($router) {
         $router->resource('/products', 'ProductsController')->except(['index', 'show']);
-        //        $router->get('orders-update', function () {
-        //            event(new OrderUpdated(Auth()->user()));
-        //            return 'true';
-        //        });
+        $router->resource('/users', 'UsersController');
+        $router->resource('/roles', 'RolesController');
+        $router->resource('/orders', 'OrdersController')->except(['store']);
+        $router->get('/users/{id}/approve', 'UsersController@approve');
+        $router->get('/products/sort/{oldId}/{newId}', 'ProductsController@sort');
+        $router->post('/products/import/upload', 'ProductsController@upload');
+        $router->post('/products/import/save', 'ProductsController@save');
+        $router->get('/categories', 'CategoriesController@index');
+        $router->post('/categories/update-tree', 'CategoriesController@updateTree');
     });
 });

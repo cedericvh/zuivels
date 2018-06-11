@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller {
+class RolesController extends Controller {
+    public $model;
 
+    /**
+     * RolesController constructor.
+     */
     public function __construct() {
-        //return view()->share('active', 'index');
-        $this->middleware('auth:admin');
+
+        $this->model = new Role;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index() {
-        //
-
-        $categories = Category::where('title', '=', 'Productgroepen')->first()->getDescendantsAndSelf()->toHierarchy();
-
-        return view('admin.categories.index', compact('categories'));
-
+        $roles = $this->model->get();
+        return response()->json(['roles' => $roles]);
     }
 
     /**
@@ -34,9 +33,6 @@ class CategoryController extends Controller {
      */
     public function create() {
         //
-        $child2 = Category::create(['title' => 'Child 2']);
-        //$demons = Category::where('title', '=', 'Child 2')->delete();
-        //$child2->makeChildOf($root);
     }
 
     /**
@@ -89,5 +85,4 @@ class CategoryController extends Controller {
     public function destroy($id) {
         //
     }
-
 }

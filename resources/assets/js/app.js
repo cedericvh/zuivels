@@ -7,11 +7,13 @@ import Vue from 'vue'
 import App from './components/App.vue'
 import router from './router'
 import store from './store'
-import Vddl from 'vddl'
-Vue.use(Vddl)
+
 require('./bootstrap')
 require('./mixins')
 
+import Tree from './components/admin/categories/Tree.vue'
+
+Vue.component('item', Tree)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -19,11 +21,15 @@ require('./mixins')
  */
 export default new Vue({
     el: '#app',
-    components: { App },
+    components: {App},
     router,
     store,
     created() {
         let token = this.$store.getters.accessToken
-        if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+            Echo.connector.pusher.config.auth.headers['Authorization'] = `Bearer ${token}`
+        }
+
     }
 })

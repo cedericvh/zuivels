@@ -5,7 +5,8 @@ namespace App\Models;
 use Baum\Node;
 
 class Category extends Node {
-    protected $table = 'categories';
+    protected $fillable = ['title', 'sorting_id'];
+    protected $orderColumn = 'sorting_id';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

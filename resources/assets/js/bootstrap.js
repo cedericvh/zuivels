@@ -56,8 +56,3 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: true
 });
-
-// window.Echo.private('orders')
-// .listen('OrderUpdated', (e) => {
-//     console.log(e, 123)
-// });

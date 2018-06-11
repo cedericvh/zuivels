@@ -9,15 +9,15 @@
         </div>
         <ul class="app-menu">
             <li v-for="item in menuItems"
-                :class="{ treeview: item.childs, 'is-expanded': item.childs && item.id === activeMenuId }"
+                :class="{ treeview: item.children, 'is-expanded': item.children && item.id === activeMenuId }"
                 @click="activeMenuId = activeMenuId === item.id ? null : item.id">
                 <router-link class="app-menu__item" :to="item.path">
                     <i class="app-menu__icon fa" :class="item.icon"></i>
                     <span class="app-menu__label">{{ item.name }}</span>
-                    <i v-if="item.childs" class="treeview-indicator fa fa-angle-right"></i>
+                    <i v-if="item.children" class="treeview-indicator fa fa-angle-right"></i>
                 </router-link>
-                <ul class="treeview-menu" v-if="item.childs">
-                    <li v-for="child in item.childs">
+                <ul class="treeview-menu" v-if="item.children">
+                    <li v-for="child in item.children">
                         <router-link class="treeview-item" :to="child.path">
                             <i class="icon fa" :class="child.icon"></i> {{ child.name }}
                         </router-link>
@@ -46,7 +46,7 @@
                         icon: 'fa-th-list',
                         name: 'Producten',
                         path: '',
-                        childs: [
+                        children: [
                             {
                                 id: 1,
                                 icon: 'fa-circle-o',
@@ -59,6 +59,18 @@
                                 path: '/admin/categories',
                             }
                         ]
+                    },
+                    {
+                        id: 3,
+                        name: 'Users',
+                        icon: 'fa-user',
+                        path: '/admin/users'
+                    },
+                    {
+                        id: 4,
+                        name: 'Orders',
+                        icon: 'fa-cart-arrow-down',
+                        path: '/admin/orders'
                     }
                 ]
             }
