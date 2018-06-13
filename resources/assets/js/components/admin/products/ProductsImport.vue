@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary" @click="save""">Save</button>
+                            <button class="btn btn-primary" @click="save" :disabled="!count(products)">Save</button>
                         </div>
                     </div>
                     <table class="table" v-if="count(products)">
@@ -90,7 +90,7 @@
             save() {
                 axios.post('/products/import/save', this.products)
                 .then(response => {
-                    console.log(response.data)
+                    if (response.data.success) this.$router.push('/admin/products')
                 })
             }
         }

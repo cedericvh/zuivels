@@ -26,8 +26,8 @@ const getters = {
 
 // actions
 const actions = {
-    getAllProducts({commit}, page) {
-        axios.get(`/products?page=${page}`).then(response => {
+    getAllProducts({commit}) {
+        axios.get(`/products`).then(response => {
             commit('setProducts', response.data.products)
             // delete response.data.products.data
             // commit('setPaginateData', response.data.products)
@@ -35,7 +35,9 @@ const actions = {
     },
     getFilteredProducts({commit}, selectedCategories) {
         axios.get('/products', {
-            params: selectedCategories
+            params: {
+                categories: selectedCategories
+            }
         }).then(response => {
             commit('setFiltered', response.data.products)
         })

@@ -8,6 +8,7 @@ import Register from '../components/auth/Register.vue'
 import Home from '../components/client/Home.vue'
 import ProductList from '../components/client/ProductList.vue'
 import Cart from '../components/client/Cart.vue'
+import Checkout from '../components/client/Checkout.vue'
 
 import AdminHome from '../components/admin/Home.vue'
 import AdminProducts from '../components/admin/products/Products.vue'
@@ -32,6 +33,7 @@ const router = new VueRouter({
         {path: '/', component: Home},
         {path: '/aanbod', component: ProductList, meta: {auth: true}},
         {path: '/winkelmandje', component: Cart, meta: {auth: true}},
+        {path: '/checkout', component: Checkout, meta: {auth: true}},
 
         // Admin
         {path: '/admin', component: AdminHome, meta: {admin: true}},

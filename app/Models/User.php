@@ -75,17 +75,10 @@ class User extends Authenticatable {
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function accessToken() {
-        return $this->hasMany('App\Models\OauthAccessToken');
-    }
-
-    /**
      * @return mixed
      */
     public function logout() {
-        return $this->accessToken()->delete();
+        return $this->tokens()->delete();
     }
 
     /**

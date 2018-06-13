@@ -5,14 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model {
-    //
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'orders';
 
     /**
      * The attributes that are mass assignable.
@@ -20,16 +12,44 @@ class Order extends Model {
      * @var array
      */
     protected $fillable = [
-
         'email',
         'bestelling',
         'rejected',
         'dategetorder',
-        'hide'
+        'country',
+        'city',
+        'address1',
+        'address2',
+        'date',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'bestelling' => 'array',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['date'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user() {
         return $this->belongsTo('App\Models\User', 'email', 'email');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products() {
+        return $this->belongsToMany('App\Models\Product', 'product_order')->withPivot(['quantity']);
+    }
 }

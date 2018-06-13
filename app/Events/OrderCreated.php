@@ -20,17 +20,15 @@ class OrderCreated implements ShouldBroadcast {
      *
      * @var User
      */
-    public $user;
-    public $orders;
+    public $created;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, $orders) {
-        $this->user = $user;
-        $this->orders = $orders;
+    public function __construct($created) {
+        $this->created = $created;
     }
 
     /**
@@ -39,7 +37,7 @@ class OrderCreated implements ShouldBroadcast {
      * @return \Illuminate\Broadcasting\Channel
      */
     public function broadcastOn() {
-        return new PrivateChannel('orders');
+        return new Channel('orders');
     }
 }
 

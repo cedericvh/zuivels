@@ -27,5 +27,4 @@ class Product extends Model {
             ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
             ->whereIn('products_categories.category_id', $categoryIds);
     }
-
 }

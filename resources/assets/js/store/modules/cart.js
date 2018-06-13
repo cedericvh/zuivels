@@ -41,6 +41,9 @@ const actions = {
             commit('decreaseItemQuantity', {id: product.id})
         }
     },
+    emptyCart({state, commit}) {
+        commit('setCartItems', {items: []})
+    }
 }
 
 // mutations

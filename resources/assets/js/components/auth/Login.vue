@@ -5,24 +5,21 @@
                 <div class="card">
                     <div class="card-header">Login</div>
                     <div class="card-body">
+                        <div class="alert alert-danger" v-if="error.message">
+                            <strong>Error!</strong> {{ error.message }}.
+                        </div>
                         <form @submit.prevent="login">
                             <div class="form-group row">
                                 <label for="email" class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" :class="{ 'is-invalid': errors.email }" name="username" required autofocus v-model="credentials.username">
-                                    <span class="invalid-feedback" v-if="errors.email">
-                                        <strong>{{ errors.password[0] }}</strong>
-                                    </span>
+                                    <input id="email" type="email" class="form-control" name="username" required autofocus v-model="credentials.username">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" name="password" required v-model="credentials.password">
-                                    <span class="invalid-feedback" v-if="errors.password">
-                                        <strong>{{ errors.password[0] }}</strong>
-                                    </span>
+                                    <input id="password" type="password" class="form-control" name="password" required v-model="credentials.password">
                                 </div>
                             </div>
 
@@ -33,7 +30,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
@@ -59,7 +55,7 @@
         name: "Login",
         data() {
             return {
-                errors: {},
+                error: {},
                 credentials: {
                     username: '',
                     password: '',
@@ -71,15 +67,14 @@
         },
         methods: {
             login() {
-                this.errors = {}
-                axios.create({baseURL: '/'}).post('/oauth/token', this.credentials)
+                this.error = {}
+                axios.post('/oauth/token', this.credentials)
                 .then(response => {
                     this.$store.dispatch('setAccessToken', response.data.access_token)
                     axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`
                     this.getUser()
                 }).catch(error => {
-                    if (error.response.data.errors)
-                        this.errors = error.response.data.errors
+                    this.error = error.response.data
                 })
             },
             getUser() {
@@ -87,6 +82,18 @@
                     this.$store.dispatch('setUser', response.data.user)
                     this.$router.push({path: '/'})
                 })
+            }
+            ,
+            mounted() {
+                $("#range").ionRangeSlider({
+                    type: "double",
+                    min: 0,
+                    max: 1000,
+                    from: 200,
+                    to: 500,
+                    grid: true
+                })
+
             }
         }
     }

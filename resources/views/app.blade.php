@@ -19,5 +19,8 @@
     <app></app>
 </div>
 <script src="{{ asset('js/app.js') }}" defer></script>
+<script>
+    var translations = JSON.parse('{!! json_encode(trans('app')) !!}')
+</script>
 </body>
 </html>

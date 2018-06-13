@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <div class="tile">
                     <h3 class="tile-title">Categorieën
-                        <router-link to="/admin/categories/create" class="btn btn-link float-right">Categorie aanmaken</router-link>
+                        <!--<router-link to="/admin/categories/create" class="btn btn-link float-right">Categorie aanmaken</router-link>-->
                     </h3>
                     <category-draggable :parent="0"></category-draggable>
                 </div>

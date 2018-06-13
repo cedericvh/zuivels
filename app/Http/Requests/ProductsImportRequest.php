@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductsRequest extends FormRequest {
+class ProductsImportRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -21,9 +21,8 @@ class ProductsRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'title'       => 'required',
-            'description' => 'required',
-            'image'       => 'sometimes|mimes:jpeg,jpg,png,gif'
+            'sheet' => 'required|mimeTypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/csv,'
+                . 'application/excel,application/vnd.ms-excel,application/vnd.msexcel,text/csv,text/anytext,text/plain,text/x-c'
         ];
     }
 }

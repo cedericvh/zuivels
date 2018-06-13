@@ -21,6 +21,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th></th>
                             <th>Naam</th>
                             <th>Category</th>
                             <th></th>
@@ -28,6 +29,7 @@
                         </thead>
                         <draggable class="cursor-pointer" v-model="products" element="tbody" :options="options" @sort="sorted">
                             <tr v-for="product in products" :key="product.id">
+                                <td>{{product.sorting_id}}</td>
                                 <td>
                                     <router-link :to="`/admin/products/${product.id}`">
                                         {{ product.title }}
@@ -80,15 +82,14 @@
             },
             sorted(e) {
                 axios.get(`/products/sort/${e.oldIndex + 1}/${e.newIndex + 1}`)
+                .then(response => {
+                    if(response.data.success) this.$store.dispatch('getAllProducts')
+                }).catch(response => console.log(response.data))
             },
             fetchcategories() {
                 axios.get('/cats')
                 .then(response => this.categories = response.data.categories[1].children)
                 .catch(response => console.log(response.data))
-            },
-            changePage(page) {
-                this.curPage = page
-                this.$store.dispatch('getAllProducts', page)
             }
         },
         computed: {
@@ -106,7 +107,7 @@
         },
         created() {
             this.fetchcategories()
-            this.$store.dispatch('getAllProducts', this.curPage)
+            this.$store.dispatch('getAllProducts')
         }
     }
 </script>

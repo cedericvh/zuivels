@@ -23,24 +23,23 @@
                             <th>Email</th>
                             <th>Bestelling</th>
                             <th>Rejected</th>
-                            <th>Dategetorder</th>
+                            <th>Address</th>
                             <th>Date</th>
-                            <th class="text-right">Actions</th>
                         </tr>
                         </thead>
                         <tr v-for="order in orders" :key="order.id">
                             <td>{{ order.id }}</td>
                             <td>{{ order.email }}</td>
-                            <td>{{ order.bestelling }}</td>
-                            <td>{{ order.rejected }}</td>
-                            <td>{{ order.dategetorder }}</td>
-                            <td>{{ order.date }}</td>
-                            <td class="text-right">
-                                <div class="btn-group">
-                                    <a href="" @click.prevent="destroy(order.id)" class="btn btn-sm btn-link">Delete</a>
-                                    <router-link :to="`/admin/orders/${order.id}/edit`" class="btn btn-sm btn-link">Edit</router-link>
-                                </div>
+                            <td>
+                                <router-link class="btn btn-link" :to="`/admin/products/${product.id}/edit`" v-for="product in order.products" :key="product.id">
+                                    {{ product.title }} ({{ product.pivot.quantity }})
+                                </router-link>
                             </td>
+                            <td>{{ order.rejected ? 'Yes' : 'No' }}</td>
+                            <td>
+                                {{ order.country }}, {{ order.city }}, {{ order.address1 }} {{ order.address2 }}
+                            </td>
+                            <td>{{ order.date }}</td>
                         </tr>
                     </table>
                 </div>
@@ -70,9 +69,9 @@
             }
         },
         mounted() {
-            Echo.private('orders.1')
-            .listen('OrderUpdated', (e) => {
-                console.log(e)
+            Echo.channel('orders')
+            .listen('OrderCreated', (e) => {
+                if (e.created) this.fetchData()
             })
             this.fetchData()
         }

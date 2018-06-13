@@ -47,7 +47,6 @@
             addSelCats() {
                 this.$store.dispatch('setCategories', this.selected)
                 this.$store.dispatch('getFilteredProducts', this.selected)
-                // this.$store.dispatch('loadUserData')
             },
         },
         created() {

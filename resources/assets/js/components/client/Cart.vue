@@ -34,10 +34,11 @@
                                 </tbody>
                             </table>
                             <p>
-                                <button v-show="cartProducts.length" class='btn btn-primary btn-sm' @click='checkout'>
+                                <router-link to="/checkout" v-show="cartProducts.length" class='btn btn-primary btn-sm'>
                                     Uw bestelling plaatsen
-                                </button>
-                                of <router-link to="/aanbod">verder winkelen</router-link>
+                                </router-link>
+                                of
+                                <router-link to="/aanbod">verder winkelen</router-link>
                             </p>
                         </div>
                     </div>
@@ -54,12 +55,7 @@
             cartProducts() {
                 return this.$store.getters.cartProducts
             }
-        },
-        methods: {
-            checkout() {
-                this.$store.dispatch('checkout')
-            }
-        },
+        }
     }
 </script>
 

@@ -5,11 +5,10 @@
                 <span>Uw winkelmandje bevat {{cartProductsQuantity}} producten - <router-link to="/winkelmandje">Naar de winkelmand</router-link></span>
             </div>
         </div>
-        <button @click="order">order</button>
         <div class="row" v-for="i in Math.ceil(products.length / 3)">
             <div v-for="(product, index) in products.slice((i - 1) * 3, i * 3)" class="item col-lg-4 col-md-6 col-sm-6 mb-4 product text-center">
                 <div>
-                    <img :src="'/storage/' + product.image " class="img-fluid"/>
+                    <img :src="'/storage/' + product.image " class="img-fluid" onError="this.src='/images/placeholder.jpg';"/>
                     <p>{{product.title}}</p>
                     <div class="add-to-cart">
                         <div class="left float-left">

@@ -14,10 +14,10 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/register', 'AuthController@register')->middleware('guest');
+Route::post('/oauth/token', 'AuthController@issueUserToken');
 Route::middleware('auth:api')->group(function ($router) {
     $router->get('/logout', 'AuthController@logout');
     $router->get('/user', 'AuthController@showUser');
-
     $router->get('/cats', 'Api\CallapiController@apiFetchCategories');
     $router->get('/products', 'Api\CallapiController@apiFetchProducts');
     $router->post('/userdata', 'Api\CallapiController@apiFetchUserData');

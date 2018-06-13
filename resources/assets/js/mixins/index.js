@@ -5,5 +5,10 @@ Vue.mixin({
         user() {
             return this.$store.getters.user
         }
+    },
+    filters: {
+        trans(value) {
+            return translations[value]
+        }
     }
 })

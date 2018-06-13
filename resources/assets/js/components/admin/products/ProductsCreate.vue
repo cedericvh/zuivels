@@ -10,18 +10,24 @@
                     <form @submit.prevent="submit">
                         <div class="form-group">
                             <label for="title">Product naam</label>
-                            <input type="text" name="title" id="title" class="form-control" v-model="product.title" :class="{ 'is-invalid': errors.title }">
+                            <input type="text" name="title" id="title" class="form-control" :class="{ 'is-invalid': errors.title }">
                             <span class="invalid-feedback" v-if="errors.title">
                                 <strong>{{ errors.title[0] }}</strong>
                             </span>
                         </div>
                         <div class="form-group">
                             <label for="description">Omschrijving</label>
-                            <textarea name="description" id="description" cols="30" rows="10" class="form-control" v-model="product.description"></textarea>
+                            <textarea name="description" id="description" cols="30" rows="10" class="form-control" :class="{ 'is-invalid': errors.description }"></textarea>
+                            <span class="invalid-feedback" v-if="errors.description">
+                                <strong>{{ errors.description[0] }}</strong>
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="image">Image</label>
-                            <input type="file" class="form-control" id="image" name="image" :class="{ 'is-invalid': errors.title }">
+                            <input type="file" class="form-control" id="image" name="image" :class="{ 'is-invalid': errors.image }">
+                            <span class="invalid-feedback" v-if="errors.image">
+                                <strong>{{ errors.image[0] }}</strong>
+                            </span>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Aanpassen</button>
@@ -38,13 +44,13 @@
         name: "ProductsCreate",
         data() {
             return {
-                errors: {},
-                product: {}
+                errors: {}
             }
         },
         methods: {
-            submit() {
-                axios.post('/products', this.product)
+            submit(e) {
+                let formData = new FormData(e.target)
+                axios.post('/products', formData)
                 .then(response => {
                     if (response.data.success) {
                         this.$router.push('/admin/products')

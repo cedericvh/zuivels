@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderCreated;
+use App\Http\Requests\OrdersRequest;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller {
@@ -20,7 +22,7 @@ class OrdersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $orders = $this->model->get();
+        $orders = $this->model->with('products')->orderBy('id', 'DESC')->get();
         return response()->json(compact('orders'));
     }
 
@@ -39,9 +41,17 @@ class OrdersController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $orders = $this->model->get();
-        $e = event(new OrderCreated($request->user(), $orders));
+    public function store(OrdersRequest $request) {
+        $data = $request->except('products');
+        $data['email'] = $request->user()->email;
+        $data['dategetorder'] = Carbon::today();
+        $data['rejected'] = false;
+        $data['date'] = Carbon::createFromFormat('d/m/Y H:i', $data['date']);
+        $order = $this->model->create($data);
+        $products = $request->get('products');
+        $order->products()->attach($products);
+        event(new OrderCreated(!!$order));
+        return response()->json(['success' => !!$order]);
     }
 
     /**
