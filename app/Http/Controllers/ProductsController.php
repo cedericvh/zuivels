@@ -58,6 +58,7 @@ class ProductsController extends Controller {
     public function store(ProductsRequest $request) {
         $data = $request->all();
         $data['sorting_id'] = $this->model->orderBy('sorting_id', 'DESC')->pluck('sorting_id')->first() + 1;
+        $data['image'] = '';
         if ($request->file('image')) {
             $data['image'] = $request->file('image')->store('public');
         }
