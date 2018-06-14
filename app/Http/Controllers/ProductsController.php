@@ -58,7 +58,9 @@ class ProductsController extends Controller {
     public function store(ProductsRequest $request) {
         $data = $request->all();
         $data['sorting_id'] = $this->model->orderBy('sorting_id', 'DESC')->pluck('sorting_id')->first() + 1;
-        $data['image'] = $request->file('image')->store('public');
+        if ($request->file('image')) {
+            $data['image'] = $request->file('image')->store('public');
+        }
         $model = $this->model->create($data);
         return response()->json(['success' => $model ? true : false]);
 
@@ -94,7 +96,9 @@ class ProductsController extends Controller {
      */
     public function update(ProductsRequest $request, $id) {
         $data = $request->except('_method');
-        $data['image'] = $request->file('image')->store('public');
+        if ($request->file('image')) {
+            $data['image'] = $request->file('image')->store('public');
+        }
         $success = $this->model->whereId($id)->update($data);
         return response()->json(compact('success'));
     }

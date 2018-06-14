@@ -20,7 +20,8 @@ export default new Vuex.Store({
     strict: debug,
     plugins: [
         createPersistedState({
-            storage: window.sessionStorage
+            storage: window.sessionStorage,
+            paths: ['cart', 'categories', 'auth']
         })
     ],
 })
