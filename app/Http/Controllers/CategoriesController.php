@@ -17,7 +17,7 @@ class CategoriesController extends Controller {
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function index() {
-        $categories = $this->model->get()->toHierarchy();
+        $categories = $this->model->orderBy('sorting_id')->get()->toHierarchy();
         return response()->json(compact('categories'));
 
     }
@@ -28,7 +28,7 @@ class CategoriesController extends Controller {
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function indexLeaves() {
-        $categories = $this->model->get()->getDescendants();
+        $categories = $this->model->find(1)->getLeaves();
         return response()->json(compact('categories'));
 
     }
