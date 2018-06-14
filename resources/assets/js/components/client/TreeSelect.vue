@@ -40,7 +40,7 @@
                 }
             },
             loadRootOptions(callback) {
-                axios.get('/cats')
+                axios.get('/categories')
                 .then(response => callback(null, response.data.categories[1].children))
                 .catch(response => console.log(response.data))
             },

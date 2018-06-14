@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function ($router) {
     $router->get('/fetchattachedcategories/{product}', 'Api\CallapiController@apiFetchAttachedCategories')->name('admin.products.fetchattachedcategories');
     $router->resource('/products', 'ProductsController')->only(['index', 'show']);
     $router->resource('/orders', 'OrdersController')->only(['store']);
+    $router->get('/categories', 'CategoriesController@index');
 
     $router->group(['middleware' => 'admin'], function ($router) {
         $router->resource('/products', 'ProductsController')->except(['index', 'show']);
@@ -36,7 +37,6 @@ Route::middleware('auth:api')->group(function ($router) {
         $router->get('/products/sort/{oldId}/{newId}', 'ProductsController@sort');
         $router->post('/products/import/upload', 'ProductsController@upload');
         $router->post('/products/import/save', 'ProductsController@save');
-        $router->get('/categories', 'CategoriesController@index');
         $router->get('/categories/leaves', 'CategoriesController@indexLeaves');
         $router->post('/categories/update-tree', 'CategoriesController@updateTree');
     });
