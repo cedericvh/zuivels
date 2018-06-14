@@ -3,6 +3,7 @@
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -11,11 +12,10 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
     public function run() {
-//        $this->call(CategoriesSeeder::class);
 //        $this->call(ProductTableSeeder::class);
-        $this->call(RoleTableSeeder::class);
-        $this->call(UserTableSeeder::class);
-
+        $this->call(CategoriesSeeder::class);
+//        $this->call(RoleTableSeeder::class);
+//        $this->call(UserTableSeeder::class);
         $this->command->info('Categories table seeded!');
     }
 }
@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder {
 class CategoriesSeeder extends Seeder {
 
     public function run() {
-        Category::truncate();
         Category::buildTree([
             [
                 'id'         => 1,

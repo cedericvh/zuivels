@@ -17,7 +17,7 @@ class CategoriesController extends Controller {
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function index() {
-        $categories = $this->model->whereTitle('Productgroepen')->first()->getDescendantsAndSelf()->toHierarchy();
+        $categories = $this->model->get()->toHierarchy();
         return response()->json(compact('categories'));
 
     }
@@ -28,7 +28,7 @@ class CategoriesController extends Controller {
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function indexLeaves() {
-        $categories = $this->model->whereTitle('Productgroepen')->first()->getDescendants();
+        $categories = $this->model->get()->getDescendants();
         return response()->json(compact('categories'));
 
     }

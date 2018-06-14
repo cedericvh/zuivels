@@ -2,13 +2,16 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use Illuminate\Support\Facades\Schema;
 
 class ProductTableSeeder extends Seeder {
     public function run() {
         Product::all()->each(function ($item) {
             $item->categories()->detach();
         });
+        Schema::disableForeignKeyConstraints();
         Product::truncate();
+        Schema::enableForeignKeyConstraints();
         $product = new Product();
         $product->title = 'Inex volle melk 1L glas';
         $product->description = 'Inex volle melk 1L glas';
