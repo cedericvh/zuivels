@@ -23,6 +23,17 @@ class CategoriesController extends Controller {
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function indexLeaves() {
+        $categories = $this->model->whereTitle('Productgroepen')->first()->getDescendants();
+        return response()->json(compact('categories'));
+
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */

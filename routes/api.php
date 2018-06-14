@@ -37,6 +37,7 @@ Route::middleware('auth:api')->group(function ($router) {
         $router->post('/products/import/upload', 'ProductsController@upload');
         $router->post('/products/import/save', 'ProductsController@save');
         $router->get('/categories', 'CategoriesController@index');
+        $router->get('/categories/leaves', 'CategoriesController@indexLeaves');
         $router->post('/categories/update-tree', 'CategoriesController@updateTree');
     });
 });

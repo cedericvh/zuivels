@@ -86,9 +86,9 @@
                     if(response.data.success) this.$store.dispatch('getAllProducts')
                 }).catch(response => console.log(response.data))
             },
-            fetchcategories() {
-                axios.get('/cats')
-                .then(response => this.categories = response.data.categories[1].children)
+            getCategories() {
+                axios.get('/categories/leaves')
+                .then(response => this.categories = response.data.categories)
                 .catch(response => console.log(response.data))
             }
         },
@@ -106,7 +106,7 @@
             }
         },
         created() {
-            this.fetchcategories()
+            this.getCategories()
             this.$store.dispatch('getAllProducts')
         }
     }
