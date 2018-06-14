@@ -18,7 +18,7 @@
                     <button class="btn btn-sm btn-link float-right" @click="addChild">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <button class="btn btn-sm btn-link float-right" @click="removed">
+                    <button v-if="model.id !== 1" class="btn btn-sm btn-link float-right" @click="removed">
                         <i class="fa fa-trash"></i>
                     </button>
                 </div>
