@@ -103,6 +103,7 @@
                 .then(response => {
                     if (response.data.success) {
                         this.$store.dispatch('emptyCart')
+                        this.$store.dispatch('setAlert', 'Thanks for order.  We will process this as soon as possible.')
                         this.$router.push('aanbod')
                     }
                 }).catch(error => {
@@ -110,6 +111,12 @@
                         this.errors = error.response.data.errors
                 })
             }
+        },
+        created() {
+            this.order.country = this.user.address ? this.user.address.country : ''
+            this.order.city = this.user.address ? this.user.address.city : ''
+            this.order.address1 = this.user.address ? this.user.address.address1 : ''
+            this.order.address2 = this.user.address ? this.user.address.address2 : ''
         }
     }
 </script>

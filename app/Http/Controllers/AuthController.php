@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserRegistered;
 use App\Models\Role;
 use App\Models\User;
 use App\Http\Requests\RegisterRequest as Request;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -13,7 +15,7 @@ class AuthController extends AccessTokenController {
      * @return \Illuminate\Http\JsonResponse
      */
     public function showUser() {
-        return response()->json(['user' => auth()->user()]);
+        return response()->json(['user' => auth()->user()->load('address')]);
     }
 
     /**
@@ -28,10 +30,15 @@ class AuthController extends AccessTokenController {
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request) {
-        $data = $request->all();
+        $data = $request->except('address');
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
         $user->roles()->attach(Role::where('name', 'customer')->first());
+        $user->address()->create($request->get('address'));
+        $admin = User::whereHas('roles', function ($query) {
+            $query->whereName('Admin');
+        })->first();
+        Mail::to($admin)->send(new UserRegistered);
         return response()->json(['success' => $user ? true : false]);
     }
 

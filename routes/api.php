@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function ($router) {
     $router->get('/fetchattachedcategories/{product}', 'Api\CallapiController@apiFetchAttachedCategories')->name('admin.products.fetchattachedcategories');
     $router->resource('/products', 'ProductsController')->only(['index', 'show']);
     $router->resource('/orders', 'OrdersController')->only(['store']);
+    $router->get('/orders/latest', 'OrdersController@latest');
     $router->get('/categories', 'CategoriesController@index');
 
     $router->group(['middleware' => 'admin'], function ($router) {

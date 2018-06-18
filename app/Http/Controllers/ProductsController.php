@@ -174,19 +174,17 @@ class ProductsController extends Controller {
                 if ($row[1]) {
                     $cat = $row[1];
                     $products[$cat] = [];
-                    if (!$row[3]) {
-                        $sub = 'no_sub';
-                    }
+                    $sub = '';
+                    if (!$row[3]) $sub = 'no_sub';
                 };
                 if ($row[3] && $sub != 'no_sub') {
                     $sub = $row[3];
                     $products[$cat][$sub] = [];
                 };
-                if ($sub && $sub != 'no_sub') {
+                if ($sub && $sub != 'no_sub')
                     $products[$cat][$sub][] = $product;
-                } else {
+                else
                     $products[$cat][] = $product;
-                }
             }
         });
         return response()->json(compact('products'));
@@ -226,7 +224,7 @@ class ProductsController extends Controller {
     public function saveCategory($name, $parent = null) {
         $exists = Category::whereTitle($name)->first();
         if ($exists) return $exists;
-        $base = $parent !== null ? Category::whereTitle($parent)->first() : Category::whereTitle('Productgroepen')->first();
+        $base = $parent !== null ? Category::whereTitle($parent)->first() : Category::find(1);
         return $base->children()->create(['title' => $name]);
     }
 

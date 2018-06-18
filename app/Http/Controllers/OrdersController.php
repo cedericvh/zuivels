@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Events\OrderCreated;
 use App\Http\Requests\OrdersRequest;
 use App\Models\Order;
+use App\Models\User;
 use Carbon\Carbon;
+use function compact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller {
     /**
@@ -51,6 +54,13 @@ class OrdersController extends Controller {
         $products = $request->get('products');
         $order->products()->attach($products);
         event(new OrderCreated(!!$order));
+
+        Mail::to($request->user())->send(new \App\Mail\OrderCreated(true));
+        $admin = User::whereHas('roles', function ($query) {
+            $query->whereName('Admin');
+        })->first();
+        Mail::to($admin)->send(new \App\Mail\OrderCreated(false));
+
         return response()->json(['success' => !!$order]);
     }
 
@@ -93,5 +103,12 @@ class OrdersController extends Controller {
      */
     public function destroy($id) {
         //
+    }
+
+    public function latest() {
+        $order = $this->model->whereEmail(auth()->user()->email)->orderBy('created_at', 'DESC')->with(['products' => function($query) {
+            $query->select(['products.id'   ]);
+        }])->first(['id']);
+        return response()->json(compact('order'));
     }
 }

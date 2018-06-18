@@ -16,6 +16,7 @@
                         <tree-select></tree-select>
                     </div>
                     <div class="main col-md-9 order-md-2">
+                        <alert></alert>
                         <products></products>
                     </div>
                 </div>

@@ -12,8 +12,11 @@ require('./bootstrap')
 require('./mixins')
 
 import Tree from './components/admin/categories/Tree.vue'
+import Alert from './components/partials/Alert.vue'
 
 Vue.component('item', Tree)
+Vue.component('alert', Alert)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

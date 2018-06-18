@@ -38,10 +38,23 @@ class User extends Authenticatable {
         return true;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles() {
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function address() {
+        return $this->hasOne(Address::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function orders() {
         return $this->hasMany('App\Models\Order', 'email', 'email');
     }

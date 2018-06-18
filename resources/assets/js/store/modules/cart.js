@@ -6,14 +6,10 @@ const state = {
 // getters
 const getters = {
     cartProducts: (state, getters, rootState) => {
+        if (!rootState.products.all.length) return []
         return state.added.map(({id, quantity}) => {
             const product = rootState.products.all.find(product => product.id === id)
-            return {
-                id,
-                title: product.title,
-                image: product.image,
-                quantity
-            }
+            return {id, title: product.title, image: product.image, quantity}
         })
     },
     cartProductsQuantity: (state) => {
@@ -40,6 +36,9 @@ const actions = {
         if (cartItem && cartItem.quantity > 0) {
             commit('decreaseItemQuantity', {id: product.id})
         }
+    },
+    setCart({state, commit}, data) {
+        commit('setCartItems', {items: data})
     },
     emptyCart({state, commit}) {
         commit('setCartItems', {items: []})

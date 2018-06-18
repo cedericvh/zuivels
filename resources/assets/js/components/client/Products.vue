@@ -1,7 +1,12 @@
 <template>
     <div class="productlist">
         <div class="row">
-            <div class="col-sm-12 text-right">
+            <div class="col-sm-6">
+                <button class="btn btn-primary" @click="checkoutWithLatest">
+                    Checkout with latest order
+                </button>
+            </div>
+            <div class="col-sm-6 text-right">
                 <span>Uw winkelmandje bevat {{cartProductsQuantity}} producten - <router-link to="/winkelmandje">Naar de winkelmand</router-link></span>
             </div>
         </div>
@@ -51,8 +56,17 @@
                 let cartProduct = this.cartProducts.find(item => item.id === id)
                 return cartProduct ? cartProduct.quantity : 0
             },
-            order() {
-                axios.post('orders', {})
+            checkoutWithLatest() {
+                axios.get('/orders/latest')
+                .then(response => {
+                    this.$store.dispatch('setCart', response.data.order.products.map(item => {
+                        return {
+                            id: item.pivot.product_id,
+                            quantity: item.pivot.quantity,
+                        }
+                    }))
+                    this.$router.push({path: '/winkelmandje'})
+                })
             }
         },
         created() {

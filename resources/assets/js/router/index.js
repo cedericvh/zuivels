@@ -24,6 +24,7 @@ import Orders from '../components/admin/orders/Orders.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+    mode: 'history',
     routes: [
         // Auth
         {path: '/login', component: Login, meta: {guest: true}},
@@ -33,7 +34,7 @@ const router = new VueRouter({
         {path: '/', component: Home},
         {path: '/aanbod', component: ProductList, meta: {auth: true}},
         {path: '/winkelmandje', component: Cart, meta: {auth: true}},
-        {path: '/checkout', component: Checkout, meta: {auth: true}},
+        {path: '/checkout', component: Checkout, meta: {auth: true, productsInBag: true}},
 
         // Admin
         {path: '/admin', component: AdminHome, meta: {admin: true}},
@@ -46,8 +47,7 @@ const router = new VueRouter({
         {path: '/admin/users/:id/edit', component: UsersEdit, meta: {admin: true}, props: true},
         {path: '/admin/orders', component: Orders, meta: {admin: true}},
         {path: '/admin/products/import', component: ProductsImport, meta: {admin: true}},
-    ],
-    // linkExactActiveClass: 'active'
+    ]
 })
 
 router.beforeResolve((to, from, next) => {
@@ -60,6 +60,8 @@ router.beforeResolve((to, from, next) => {
         next({path: '/'})
     } else if (!to.meta.admin && user && user.is_admin) {
         next({path: '/admin'})
+    } else if(to.meta.productsInBag && !store.state.cart.added.length) {
+        next({path: '/aanbod'})
     } else {
         next()
     }

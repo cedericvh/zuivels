@@ -35,9 +35,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         Login
                                     </button>
-                                    <a class="btn btn-link" href="">
-                                        Forgot Your Password?
-                                    </a>
+                                    <router-link to="/register" class="btn btn-link">
+                                        Register
+                                    </router-link>
                                 </div>
                             </div>
                         </form>
@@ -80,20 +80,12 @@
             getUser() {
                 axios.get('/user').then(response => {
                     this.$store.dispatch('setUser', response.data.user)
-                    this.$router.push({path: '/'})
+                    if (response.data.user.is_admin) {
+                        this.$router.push({path: '/'})
+                    } else {
+                        this.$router.push({path: '/aanbod'})
+                    }
                 })
-            }
-            ,
-            mounted() {
-                $("#range").ionRangeSlider({
-                    type: "double",
-                    min: 0,
-                    max: 1000,
-                    from: 200,
-                    to: 500,
-                    grid: true
-                })
-
             }
         }
     }

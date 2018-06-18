@@ -5,6 +5,7 @@ import auth from './modules/auth'
 import products from './modules/products'
 import cart from './modules/cart'
 import categories from './modules/categories'
+import alert from './modules/alert'
 
 Vue.use(Vuex)
 
@@ -16,11 +17,12 @@ export default new Vuex.Store({
         products,
         cart,
         categories,
+        alert,
     },
     strict: debug,
     plugins: [
         createPersistedState({
-            storage: window.sessionStorage,
+            storage: window.localStorage,
             paths: ['cart', 'categories', 'auth']
         })
     ],
