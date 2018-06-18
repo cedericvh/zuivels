@@ -1,12 +1,12 @@
 <template>
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-header">
                     Edit User
                     <router-link to="/admin/users" class="btn btn-link float-right">Back</router-link>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <form @submit.prevent="submit">
                         <div class="form-group">
                             <label for="name">Name</label>
