@@ -60,7 +60,7 @@ class ProductsController extends Controller {
         $data['sorting_id'] = $this->model->orderBy('sorting_id', 'DESC')->pluck('sorting_id')->first() + 1;
         $data['image'] = '';
         if ($request->file('image')) {
-            $data['image'] = $request->file('image')->store('public');
+            $data['image'] = '/storage/' . $request->file('image')->store('public');
         }
         $model = $this->model->create($data);
         return response()->json(['success' => $model ? true : false]);
@@ -98,7 +98,7 @@ class ProductsController extends Controller {
     public function update(ProductsRequest $request, $id) {
         $data = $request->except('_method');
         if ($request->file('image')) {
-            $data['image'] = $request->file('image')->store('public');
+            $data['image'] = '/storage/' . $request->file('image')->store('public');
         }
         $success = $this->model->whereId($id)->update($data);
         return response()->json(compact('success'));

@@ -22,7 +22,7 @@
                                 <strong>{{ errors.description[0] }}</strong>
                             </span>
                         </div>
-                        <img :src="'/storage/' + product.image" alt="" width="150px">
+                        <img :src="product.image" alt="" width="150px">
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control" id="image" name="image" :class="{ 'is-invalid': errors.image }">
