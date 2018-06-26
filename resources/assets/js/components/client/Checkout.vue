@@ -48,7 +48,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="address2" class="col-form-label text-md-right">Date</label>
-                                        <date-picker readonly v-model="order.date" :class="{ 'is-invalid': errors.address2}" name="address2" :config="options" class="bg-white"></date-picker>
+                                        <date-picker readonly v-model="order.date" :class="{ 'is-invalid': errors.date}" name="date" :config="options" class="bg-white"></date-picker>
                                         <span class="invalid-feedback" v-if="errors.date">
                                             <strong>{{ errors.date[0] }}</strong>
                                         </span>

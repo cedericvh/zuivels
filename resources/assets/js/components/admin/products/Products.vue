@@ -81,7 +81,7 @@
                 })
             },
             sorted(e) {
-                axios.get(`/products/sort/${e.oldIndex + 1}/${e.newIndex + 1}`)
+                axios.get(`/products/sort/${this.products[e.oldIndex].sorting_id}/${this.products[e.newIndex].sorting_id}`)
                 .then(response => {
                     if(response.data.success) this.$store.dispatch('getAllProducts')
                 }).catch(response => console.log(response.data))

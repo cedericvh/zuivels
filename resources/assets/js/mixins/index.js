@@ -7,8 +7,10 @@ Vue.mixin({
         }
     },
     filters: {
-        trans(value) {
-            return translations[value]
+        trans(key) {
+            let translation = Object.assign({}, translations)
+            for (let item of key.split('.')) translation = translation[item] ? translation[item] : key
+            return typeof translation === 'string' ? translation : key
         }
     }
 })

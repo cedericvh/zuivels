@@ -21,8 +21,7 @@ class ProductsImportRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'sheet' => 'required|mimeTypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/csv,'
-                . 'application/excel,application/vnd.ms-excel,application/vnd.msexcel,text/csv,text/anytext,text/plain,text/x-c'
+            'sheet' => 'required|mimeTypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/csv,application/excel,application/vnd.ms-excel,application/vnd.msexcel,text/csv,text/anytext,text/plain,text/x-c'
         ];
     }
 }

@@ -21,10 +21,8 @@ class OrdersRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'country'  => 'required',
             'city'     => 'required',
             'address1' => 'required',
-            'address2' => 'required',
             'date'     => 'required',
             'products' => 'required',
         ];

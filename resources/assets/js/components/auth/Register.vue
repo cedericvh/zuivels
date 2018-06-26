@@ -118,6 +118,7 @@
         },
         methods: {
             submit() {
+                this.errors = {}
                 axios.post('/register', this.newUser)
                 .then(response => {
                     if(response.data.success) {

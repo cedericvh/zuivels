@@ -235,7 +235,7 @@ class ProductsController extends Controller {
      */
     public function saveProduct($item, &$sortingId) {
         $item['description'] = '';
-        $item['image'] = $item['image'] ?: '';
+        $item['image'] = $item['image'] ? '/storage/products/' . substr($item['image'], strrpos($item['image'], '\\') + 1) : '';
         $item['sorting_id'] = ++$sortingId;
         return $this->model->create($item);
     }
