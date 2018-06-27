@@ -17,7 +17,6 @@
                             <h1 class="title">Winkelmandje</h1>
                             <p v-if="!cartProducts.length">
                                 <i>Jouw winkelmandje is leeg !</i> Voeg snel iets toe !
-                                <!--<span>{{ message }}</span>-->
                             </p>
                             <table class="table is-striped" v-if="cartProducts.length">
                                 <thead>
@@ -29,7 +28,11 @@
                                 <tbody>
                                 <tr v-for="p in cartProducts">
                                     <td>{{ p.title }}</td>
-                                    <td>{{ p.quantity }}</td>
+                                    <td>
+                                        <button class="btn btn-light btn-sm" @click="decreaseQty(p, $event)">-</button>
+                                        {{ p.quantity }}
+                                        <button class="btn btn-light btn-sm" @click="addToCart(p, $event)">+</button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -51,6 +54,16 @@
 <script>
     export default {
         name: "Cart",
+        methods: {
+            addToCart(product, e) {
+                e.target.blur()
+                this.$store.dispatch('addProductToCart', product)
+            },
+            decreaseQty(product, e) {
+                e.target.blur()
+                this.$store.dispatch('decreaseItemQuantity', product)
+            }
+        },
         computed: {
             cartProducts() {
                 return this.$store.getters.cartProducts
