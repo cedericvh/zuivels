@@ -11,8 +11,9 @@ body {
   min-width: 320px;
 }
 
-h1, h2, h3, h4, h5 {
+.front h1, .front h2, .front h3, .front h4, .front h5 {
   font-family: 'Fredericka the Great', cursive;
+  font-weight: 300;
 }
 
 h1, h2 {
@@ -24,7 +25,13 @@ h1, h2 {
 }
 
 header.site-header {
-  padding: 40px 0 20px;
+    padding: 10px 0 20px;
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+    width: 100%;
+    background-color: #fff;
+  
 }
 
 header.site-header .logo {

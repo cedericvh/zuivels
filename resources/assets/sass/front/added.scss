@@ -1,5 +1,51 @@
+main {
+  
+  
+  padding-top:166px;
+  
+}
+
+
 .product img {
 
   max-height: 250px;
 
+}
+
+.h-100 div {
+  
+  background-repeat:no-repeat;
+  
+}
+
+.vue-treeselect__multi-value-item, .vue-treeselect__checkbox--checked, .vue-treeselect__label-wrapper:hover .vue-treeselect__checkbox--checked  {
+  
+  background-color:#c1e473;
+  color:#333;
+  
+}
+
+
+.vue-treeselect__value-remove {
+  
+  color:#333;
+  
+}
+
+.vue-treeselect__checkbox--checked .vue-treeselect__checkbox-mark:after {
+  
+      border: 2px solid #333;
+  
+}
+
+.btn-primary {
+    color: #333;
+    background-color: #c1e473;
+    border-color: #c1e473;
+}
+
+.vue-treeselect {
+    position: fixed;
+    text-align: left;
+    width: 280px;
 }

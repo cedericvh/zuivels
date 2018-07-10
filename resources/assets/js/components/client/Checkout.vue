@@ -1,4 +1,13 @@
 <template>
+<main>
+    <section class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="/images/catalog-slide.jpg" alt="First slide">
+                <p class="caption">Ontdek ons aanbod</p>
+            </div>
+        </div>
+    </section>
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -62,6 +71,7 @@
             </div>
         </div>
     </div>
+    </main>
 </template>
 
 <script>
@@ -73,7 +83,7 @@
             return {
                 errors: {},
                 order: {
-                    country: '',
+                    country: 'België',
                     city: '',
                     address1: '',
                     address2: '',
@@ -103,7 +113,7 @@
                 .then(response => {
                     if (response.data.success) {
                         this.$store.dispatch('emptyCart')
-                        this.$store.dispatch('setAlert', 'Thanks for order.  We will process this as soon as possible.')
+                        this.$store.dispatch('setAlert', 'Bedankt voor uw order.  We zullen het spoedig behandelen.')
                         this.$router.push('aanbod')
                     }
                 }).catch(error => {

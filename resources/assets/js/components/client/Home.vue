@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <main class="front">
         <section class="banner">
             <div class="container">
                 <div class="col-md-7 col-sm-12">
@@ -106,7 +106,7 @@
                     2018 – Roger wordt 70 jaar en laat zijn toeren stelselmatig over aan de jonge generatie.</p>
             </div>
         </section>
-    </div>
+    </main>
 </template>
 
 <script>

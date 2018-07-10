@@ -1,4 +1,14 @@
 <template>
+    <main>
+    <section class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="/images/catalog-slide.jpg" alt="First slide">
+                    <p class="caption">Ontdek ons aanbod</p>
+                </div>
+            </div>
+        </section>
+    <br>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -46,6 +56,7 @@
             </div>
         </div>
     </div>
+    </main>
 </template>
 
 <script>
