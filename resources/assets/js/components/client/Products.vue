@@ -13,8 +13,7 @@
         <div class="row" v-for="i in Math.ceil(products.length / 3)">
             <div v-for="(product, index) in products.slice((i - 1) * 3, i * 3)" class="item col-lg-4 col-md-6 col-sm-6 mb-4 product text-center">
                 <div class="h-100">
-                    <div :style="{ backgroundImage: 'url(\'' + product.image + '\')', backgroundSize:'contain', backgroundRepeat:'no-repeat', height:'300px' }"></div> 
-                    <!--<img :src="product.image" class="img-fluid" onError="this.src='/images/placeholder.jpg';"/>-->
+                    <div :style="{ background: '#fff url(\'' + product.image + '\')', backgroundPosition: '0% 100%', backgroundSize:'contain', backgroundRepeat:'no-repeat', height:'300px' }"></div> 
                     <p>{{product.title}}</p>
                     <div class="add-to-cart">
                         <div class="left float-left">

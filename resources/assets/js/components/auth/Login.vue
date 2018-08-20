@@ -4,7 +4,7 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="/images/catalog-slide.jpg" alt="First slide">
-                    <p class="caption">Ontdek ons aanbod</p>
+                    <p class="caption">Log in en ontdek ons aanbod</p>
                 </div>
             </div>
         </section>
@@ -20,14 +20,14 @@
                         </div>
                         <form @submit.prevent="login">
                             <div class="form-group row">
-                                <label for="email" class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
+                                <label for="email" class="col-sm-4 col-form-label text-md-right">E-mail Adres</label>
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="username" required autofocus v-model="credentials.username">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Paswoord</label>
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" name="password" required v-model="credentials.password">
                                 </div>
@@ -36,7 +36,7 @@
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" name="remember"> Remember Me</label>
+                                        <label><input type="checkbox" name="remember"> Herinner me op deze site</label>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                         Login
                                     </button>
                                     <router-link to="/register" class="btn btn-link">
-                                        Register
+                                        Registreer
                                     </router-link>
                                 </div>
                             </div>

@@ -12,7 +12,7 @@
                         <router-link v-else to="/login">Inloggen</router-link>
                     </a> -
                     <router-link v-if="user" to="/winkelmandje">winkelwagen</router-link>
-                    <router-link v-else to="/register">Register</router-link>
+                    <router-link v-else to="/register">Registreer</router-link>
                 </div>
                 <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
