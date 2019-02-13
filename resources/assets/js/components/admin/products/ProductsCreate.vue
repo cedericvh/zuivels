@@ -23,6 +23,13 @@
                             </span>
                         </div>
                         <div class="form-group">
+                            <label for="description">Te bestellen</label>
+                            <input type="text" name="toorder" id="toorder" class="form-control" :class="{ 'is-invalid': errors.toorder }">
+                            <span class="invalid-feedback" v-if="errors.description">
+                                <strong>{{ errors.description[0] }}</strong>
+                            </span>
+                        </div>                        
+                        <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control" id="image" name="image" :class="{ 'is-invalid': errors.image }">
                             <span class="invalid-feedback" v-if="errors.image">

@@ -14,12 +14,16 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/register', 'AuthController@register')->middleware('guest');
+Route::post('/submit', 'ContactFormController@submit')->middleware('guest');
 Route::post('/oauth/token', 'AuthController@issueUserToken');
+
+
+
 Route::middleware('auth:api')->group(function ($router) {
     $router->get('/logout', 'AuthController@logout');
+    $router->resource('/users', 'UsersController');  
     $router->get('/user', 'AuthController@showUser');
-    $router->get('/cats', 'Api\CallapiController@apiFetchCategories');
-    $router->get('/products', 'Api\CallapiController@apiFetchProducts');
+
     $router->post('/userdata', 'Api\CallapiController@apiFetchUserData');
     $router->post('/checkout', 'Api\CallapiController@apiCheckout');
     $router->post('/attachtocategory/{product}/{category}', 'Api\CallapiController@apiAttachToCategory')->name('admin.products.attachtocategory');
@@ -27,11 +31,20 @@ Route::middleware('auth:api')->group(function ($router) {
     $router->resource('/products', 'ProductsController')->only(['index', 'show']);
     $router->resource('/orders', 'OrdersController')->only(['store']);
     $router->get('/orders/latest', 'OrdersController@latest');
-    $router->get('/categories', 'CategoriesController@index');
+  
+  
+  // Password Reset Routes...
+    $router->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+    $router->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+    $router->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+    $router->post('password/reset', 'Auth\ResetPasswordController@reset');
+     
 
     $router->group(['middleware' => 'admin'], function ($router) {
         $router->resource('/products', 'ProductsController')->except(['index', 'show']);
-        $router->resource('/users', 'UsersController');
+        
+        $router->resource('/shippingrounds', 'ShippingroundsController'); 
+        $router->get('/shippingrounds/sort/{oldId}/{newId}', 'ShippingroundsController@sort');
         $router->resource('/roles', 'RolesController');
         $router->resource('/orders', 'OrdersController')->except(['store']);
         $router->get('/users/{id}/approve', 'UsersController@approve');
@@ -41,4 +54,14 @@ Route::middleware('auth:api')->group(function ($router) {
         $router->get('/categories/leaves', 'CategoriesController@indexLeaves');
         $router->post('/categories/update-tree', 'CategoriesController@updateTree');
     });
+});
+
+
+Route::middleware('api')->group(function ($router) {
+
+    $router->get('/cats', 'Api\CallapiController@apiFetchCategories');
+    $router->get('/categories', 'CategoriesController@index');
+    $router->get('/products', 'Api\CallapiController@apiFetchProducts');
+    $router->get('/searchproducts', 'Api\CallapiController@apiSearchProducts');
+
 });

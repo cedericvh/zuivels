@@ -23,8 +23,10 @@ class OrdersRequest extends FormRequest {
         return [
             'city'     => 'required',
             'address1' => 'required',
+            'address2' => 'required',
             'date'     => 'required',
             'products' => 'required',
+            'remark'   => 'sometimes',
         ];
     }
 }

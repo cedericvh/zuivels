@@ -8,14 +8,26 @@ import App from './components/App.vue'
 import router from './router'
 import store from './store'
 
+
+import vueSmoothScroll from 'vue2-smooth-scroll'
+
+
+Vue.use(vueSmoothScroll)
+
+
+
+
 require('./bootstrap')
 require('./mixins')
 
 import Tree from './components/admin/categories/Tree.vue'
 import Alert from './components/partials/Alert.vue'
 
+
 Vue.component('item', Tree)
 Vue.component('alert', Alert)
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -25,7 +37,7 @@ Vue.component('alert', Alert)
 export default new Vue({
     el: '#app',
     components: {App},
-    router,
+    router,    
     store,
     created() {
         let token = this.$store.getters.accessToken

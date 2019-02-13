@@ -22,7 +22,8 @@ class ProductsRequest extends FormRequest {
     public function rules() {
         return [
             'title'       => 'required',
-            'description' => 'required',
+            'description' => 'sometimes',
+            'toorder'     => 'sometimes',
             'image'       => 'sometimes|mimes:jpeg,jpg,png,gif'
         ];
     }

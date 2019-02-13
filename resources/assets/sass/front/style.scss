@@ -31,6 +31,7 @@ header.site-header {
     z-index: 1;
     width: 100%;
     background-color: #fff;
+    height:160px;
   
 }
 
@@ -100,7 +101,7 @@ header.site-header .navbar-toggler {
 section.banner {
   //background: url("../images/banner.jpg") no-repeat center;
   background-size: cover;
-  padding: 145px 0 85px;
+  padding: 160px 0 85px;
 }
 
 section.banner h1 {
@@ -138,7 +139,7 @@ section.banner a.button:hover {
 
 section.information {
   background-color: #2a2929;
-  padding: 80px 0 120px;
+  padding: 160px 0 120px;
 }
 
 section.information h2 {
@@ -171,11 +172,11 @@ section.information ul {
 
 section.map {
   text-align: center;
-  padding: 65px 0 80px;
+  padding: 160px 0 20px;
 }
 
 section.map h2 {
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 
 section.map .container-fluid {
@@ -189,7 +190,7 @@ section.map img {
 
 section.history {
   background-color: #2a2929;
-  padding: 55px 0 160px;
+  padding: 160px 0 160px;
 }
 
 section.history .container-fluid {
@@ -207,6 +208,11 @@ section.history img {
   max-width: 100%;
   height: auto;
 }
+
+section.history .hooper-slide img {
+  height:400px;  
+}
+
 
 section.history p {
   color: #fff;
@@ -234,7 +240,7 @@ section.carousel .caption {
 }
 
 .side {
-  margin-top: -65px;
+  /*margin-top: -65px;*/
 }
 
 .search {
@@ -320,7 +326,7 @@ ul.sub-menu li a:after {
 }
 
 section.catalog {
-  margin: 130px auto 150px;
+  margin: 0px auto;
 }
 
 section.catalog hr {
@@ -345,6 +351,8 @@ section.catalog .item > div {
 section.catalog .item img {
   max-width: 100%;
   height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 section.catalog .item p {
@@ -434,6 +442,15 @@ section.catalog .add-to-cart .right {
   display: inline-block;
   height: 100%;
   width: calc(100% - 66px);
+  text-align: center;
+}
+
+
+section.catalog .add-to-cart.guest .right {
+  background-color: #b5c171;
+  display: inline-block;
+  height: 100%;
+  width: calc(100% - 0px);
   text-align: center;
 }
 

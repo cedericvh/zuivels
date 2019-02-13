@@ -20,10 +20,22 @@ class UsersRequest extends FormRequest {
      * @return array
      */
     public function rules() {
+        
+      
+        if(request()->has('id')){
         return [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users' . (request()->has('id') ? ",email,{$this->request->get('id')},id" : ''),
-            'password' => request()->method() == 'PUT' ? '' : 'min:6|required'
+            
+            //'email' => 'unique:users,email,'.$this->id,
+            'password' => request()->method() == 'PUT' ? '' : 'min:6|required|confirmed'
         ];
+        }else{
+           return [
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users' . (request()->has('id') ? ",email,{$this->request->get('id')},id" : ''),
+            //'email' => 'unique:users,email,'.$this->id,
+            'password' => request()->method() == 'PUT' ? '' : 'min:6|required|confirmed' 
+             ];
+        }
     }
 }

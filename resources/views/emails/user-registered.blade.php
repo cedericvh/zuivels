@@ -1,12 +1,9 @@
 @component('mail::message')
-# Customer Registered
+# Klant geregistreerd
 
-New customer has been registered!<br>
+Er registreerde een nieuwe klant!<br>
 
-@component('mail::button', ['url' => url('/admin/users')])
-View Users
-@endcomponent
 
-Thanks,<br>
+Bedankt,<br>
 {{ config('app.name') }}
 @endcomponent

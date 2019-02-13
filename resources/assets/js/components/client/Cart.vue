@@ -4,7 +4,7 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="/images/catalog-slide.jpg" alt="First slide">
-                    <p class="caption">Ontdek ons aanbod</p>
+                    <p class="caption">Winkelmandje</p>
                 </div>
             </div>
         </section>
@@ -54,6 +54,11 @@
 <script>
     export default {
         name: "Cart",
+        computed: {
+            cartProducts() {
+                return this.$store.getters.cartProducts
+            }
+        },
         methods: {
             addToCart(product, e) {
                 e.target.blur()
@@ -64,11 +69,7 @@
                 this.$store.dispatch('decreaseItemQuantity', product)
             }
         },
-        computed: {
-            cartProducts() {
-                return this.$store.getters.cartProducts
-            }
-        }
+        
     }
 </script>
 

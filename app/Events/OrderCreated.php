@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Events;
-
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
@@ -12,25 +10,30 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderCreated implements ShouldBroadcast {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
 
+class OrderCreated implements ShouldBroadcast {
+    
+    use InteractsWithSockets, SerializesModels;
+  
+    public $order;
+    
     /**
      * User that sent the message
      *
      * @var User
      */
-    public $created;
-
+  
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($created) {
-        $this->created = $created;
+    public function __construct(Order $order) {
+      
+        $this->order = $order;
+        
+      
     }
-
     /**
      * Get the channels the event should broadcast on.
      *
@@ -39,5 +42,14 @@ class OrderCreated implements ShouldBroadcast {
     public function broadcastOn() {
         return new Channel('orders');
     }
+  
+  
+    public function broadcastWith()
+    {
+        return [
+            'order' => $this->order,
+            
+        ];
+    }  
+  
 }
-

@@ -11,10 +11,10 @@ class EventServiceProvider extends ServiceProvider {
      * @var array
      */
     protected $listen = [
-        'App\Events\Client\OrderCreated'   => [
+        'App\Events\OrderCreated'   => [
             'App\Listeners\OrderCreatedListener',
         ],
-        'App\Events\Client\OrderProcessed' => [
+        'App\Events\OrderProcessed' => [
             'App\Listeners\OrderProcessedListener'
         ],
     ];

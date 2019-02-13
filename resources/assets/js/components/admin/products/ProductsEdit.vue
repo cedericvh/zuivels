@@ -22,6 +22,13 @@
                                 <strong>{{ errors.description[0] }}</strong>
                             </span>
                         </div>
+                        <div class="form-group">
+                            <label for="description">Te bestellen</label>
+                            <input type="text" name="toorder" id="toorder" class="form-control" :class="{ 'is-invalid': errors.toorder }" v-model="product.toorder">
+                            <span class="invalid-feedback" v-if="errors.description">
+                                <strong>{{ errors.description[0] }}</strong>
+                            </span>
+                        </div>                        
                         <img :src="product.image" alt="" width="150px">
                         <div class="form-group">
                             <label for="image">Image</label>

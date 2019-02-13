@@ -11,11 +11,17 @@
         <br>
         <section class="catalog">
             <div class="container">
-                <div class="row">
-                    <div class="side col-md-3 order-md-1 mb-4">
+                <div class="row filters" id="filters">
+                    <div class="side col-md-6 order-md-1 mb-4">
+                        <search-select></search-select>
+                    </div>
+                    <div class="side col-md-6 order-md-2 mb-4">
                         <tree-select></tree-select>
                     </div>
-                    <div class="main col-md-9 order-md-2">
+                </div>
+                <div class="row">
+                    <div class="main col-md-12 order-md-2">
+                        <p>Andere merken, soorten of verpakkingen van producten steeds verkrijgbaar <a href="#contact">op aanvraag</a>.</p>
                         <alert></alert>
                         <products></products>
                     </div>
@@ -27,14 +33,40 @@
 
 <script>
     import Products from './Products.vue'
+    import SearchSelect from './SearchSelect.vue'
     import TreeSelect from './TreeSelect.vue'
 
     export default {
         name: "ProductList",
-        components: {Products, TreeSelect}
+        components: {Products, TreeSelect, SearchSelect}
+    }    
+    
+    
+    window.onscroll = function() {
+    
+    let filters = document.getElementById('filters');
+    
+    if(filters){
+      if (window.pageYOffset > 360 ) {
+          filters.classList.add("sticky-top");
+      } else {
+          filters.classList.remove("sticky-top");
+      }
     }
+    }
+        
 </script>
 
 <style scoped>
+
+  .sticky-top {
+
+
+    top:160px;    
+    background-color:#f5f8fa;
+
+  }
+
+
 
 </style>

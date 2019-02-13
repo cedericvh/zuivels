@@ -51,6 +51,7 @@ class User extends Authenticatable {
     public function address() {
         return $this->hasOne(Address::class);
     }
+  
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -100,4 +101,5 @@ class User extends Authenticatable {
     public function getIsAdminAttribute() {
         return $this->hasRole('admin');
     }
+  
 }

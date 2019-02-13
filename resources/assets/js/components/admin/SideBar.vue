@@ -68,6 +68,12 @@
                     },
                     {
                         id: 4,
+                        name: 'Rondes',
+                        icon: 'fa-circle',
+                        path: '/admin/shippingrounds'
+                    },                    
+                    {
+                        id: 5,
                         name: 'Orders',
                         icon: 'fa-cart-arrow-down',
                         path: '/admin/orders'

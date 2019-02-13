@@ -11,6 +11,28 @@ class Address extends Model {
         'country',
         'city',
         'address1',
-        'address2'
+        'address2',
+        'telephone',
+        'fax',
+        'remark',
+        'exists',
+        'shippinground_id'
     ];
+  
+  
+   /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+  
+  
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shippinground() {
+        return $this->belongsTo('App\Models\Shippinground');
+    }  
+  
 }

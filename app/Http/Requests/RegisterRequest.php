@@ -26,6 +26,8 @@ class RegisterRequest extends FormRequest {
             'password'         => 'required|string|min:6|confirmed',
             'address.city'     => 'required|string|max:255',
             'address.address1' => 'required|string|max:255',
+            'address.address2' => 'required|string|max:255',
+            'address.telephone' => 'required|string|max:255',
         ];
     }
 }

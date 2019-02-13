@@ -6,6 +6,7 @@ import products from './modules/products'
 import cart from './modules/cart'
 import categories from './modules/categories'
 import alert from './modules/alert'
+import shippingrounds from './modules/shippingrounds'
 
 Vue.use(Vuex)
 
@@ -18,12 +19,13 @@ export default new Vuex.Store({
         cart,
         categories,
         alert,
+        shippingrounds
     },
     strict: debug,
     plugins: [
         createPersistedState({
             storage: window.localStorage,
-            paths: ['cart', 'categories', 'auth']
+            paths: ['cart', 'categories','products','auth']
         })
     ],
 })

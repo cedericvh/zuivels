@@ -1,13 +1,13 @@
 <template>
     <div>
-        <h3>Productsoort</h3>
+        <h3>Filter categorie</h3>
         <treeselect
                 :load-root-options="loadRootOptions"
                 :auto-load-root-options="true"
                 :multiple="true"
                 :max-height="800"
                 :normalizer="normalizer"
-                :always-open="true"
+                :always-open="false"
                 :default-expand-level="0"
                 :clearable="true"
                 :searchable="true"

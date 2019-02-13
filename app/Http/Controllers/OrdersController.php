@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Events\OrderCreated;
@@ -10,7 +9,6 @@ use Carbon\Carbon;
 use function compact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-
 class OrdersController extends Controller {
     /**
      * OrdersController constructor.
@@ -18,7 +16,6 @@ class OrdersController extends Controller {
     public function __construct() {
         $this->model = new Order;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +25,6 @@ class OrdersController extends Controller {
         $orders = $this->model->with('products')->orderBy('id', 'DESC')->get();
         return response()->json(compact('orders'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +33,6 @@ class OrdersController extends Controller {
     public function create() {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -45,25 +40,37 @@ class OrdersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(OrdersRequest $request) {
-        $data = $request->except('products');
+        $data = $request->except('test');
+        //var_dump($data);
         $data['email'] = $request->user()->email;
         $data['dategetorder'] = Carbon::today();
         $data['rejected'] = false;
-        $data['date'] = Carbon::createFromFormat('d/m/Y H:i', $data['date']);
+        $data['date'] = Carbon::createFromTimestamp($data['date']);
+        $data['products'] = $request->get('products');
+      
+        //var_dump($data['products']);
+      
         $order = $this->model->create($data);
-        $products = $request->get('products');
+        $products = $request->get('products'); 
+      
+        //var_dump(gettype($products));
+        
+        foreach ($products as &$value) {         
+          unset($value["title"]);
+        }
         $order->products()->attach($products);
-        event(new OrderCreated(!!$order));
-
-        Mail::to($request->user())->send(new \App\Mail\OrderCreated(true));
+      
+        event(new OrderCreated($order));
+      
+        Mail::to($request->user())->locale('nl')->send(new \App\Mail\OrderCreated(true,$data));
         $admin = User::whereHas('roles', function ($query) {
             $query->whereName('Admin');
         })->first();
-        Mail::to($admin)->send(new \App\Mail\OrderCreated(false));
-
-        return response()->json(['success' => !!$order]);
+        
+        Mail::to($admin)->locale('nl')->send(new \App\Mail\OrderCreated(false,$data));
+        
+      return response()->json(['success' => !!$order]);
     }
-
     /**
      * Display the specified resource.
      *
@@ -73,7 +80,6 @@ class OrdersController extends Controller {
     public function show($id) {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -83,7 +89,6 @@ class OrdersController extends Controller {
     public function edit($id) {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -94,7 +99,6 @@ class OrdersController extends Controller {
     public function update(Request $request, $id) {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -104,7 +108,6 @@ class OrdersController extends Controller {
     public function destroy($id) {
         //
     }
-
     public function latest() {
         $order = $this->model->whereEmail(auth()->user()->email)->orderBy('created_at', 'DESC')->with(['products' => function($query) {
             $query->select(['products.id'   ]);

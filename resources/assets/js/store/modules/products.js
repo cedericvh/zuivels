@@ -30,7 +30,7 @@ const actions = {
         axios.get(`/products`).then(response => {
             commit('setProducts', response.data.products)
             // delete response.data.products.data
-            // commit('setPaginateData', response.data.products)
+            commit('setPaginateData', response.data.products)
         })
     },
     getFilteredProducts({commit}, selectedCategories) {
@@ -42,6 +42,15 @@ const actions = {
             commit('setFiltered', response.data.products)
         })
     },
+    getSearchedProducts({commit}, searchString) {
+        axios.get('/searchproducts', {
+            params: {
+                searchstring: searchString
+            }
+        }).then(response => {
+            commit('setFiltered', response.data.products)
+        })
+    },  
     sort({commit}, products) {
         commit('setProducts', products)
     },
@@ -58,6 +67,7 @@ const mutations = {
     setPaginateData(state, paginateData) {
         state.paginateData = paginateData
     },
+  
 }
 
 export default {

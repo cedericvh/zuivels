@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Mail\UserRegistered;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Address;
+use App\Models\Shippinground;
 use App\Http\Requests\RegisterRequest as Request;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
@@ -15,7 +17,23 @@ class AuthController extends AccessTokenController {
      * @return \Illuminate\Http\JsonResponse
      */
     public function showUser() {
-        return response()->json(['user' => auth()->user()->load('address')]);
+        
+              
+        $user = auth()->user()->load('address');
+      
+        
+        if(isset(auth()->user()->address->shippinground_id)){
+          $shippingRoundId = auth()->user()->address->shippinground_id;
+          $shippinground = Shippinground::where('id', $shippingRoundId)->first();
+        
+        //$shippinground = Shippinground::whereId(request()->get('id'))->first();
+        //var_dump($shippinground);
+        
+          $user->shippinground = $shippinground;
+        }
+        
+      
+        return response()->json(['user' => $user]);
     }
 
     /**

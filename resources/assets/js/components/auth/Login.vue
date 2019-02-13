@@ -4,7 +4,7 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="/images/catalog-slide.jpg" alt="First slide">
-                    <p class="caption">Log in en ontdek ons aanbod</p>
+                    <p class="caption">Log in en bestel online</p>
                 </div>
             </div>
         </section>
@@ -15,6 +15,20 @@
                 <div class="card">
                     <div class="card-header">Login</div>
                     <div class="card-body">
+                        <p>Beste bezoeker, <br>
+                        eens geregistreerd als klant, kan je inloggen via deze pagina.<br>
+
+                        Eens ingelogd, kan je:
+                        <ul>
+                        <li>online bestellingen doorgeven voor de volgende levering</li>
+                        <li>een herhalende bestelling, gebaseerd op vorige bestellingen, doorgeven</li>
+                        <li>de leveringsdatums van Uw ronde bekijken in PDF</li>
+                        <li>onze laatste productenlijst opvragen in PDF</li>
+                        </ul>
+                        
+                        Ben je hier volledig nieuw, dan kan je jezelf registreren op <a href="/register">deze pagina</a>.
+                          
+                        </p>
                         <div class="alert alert-danger" v-if="error.message">
                             <strong>Error!</strong> {{ error.message }}.
                         </div>

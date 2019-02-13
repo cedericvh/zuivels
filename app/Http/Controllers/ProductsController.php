@@ -77,6 +77,9 @@ class ProductsController extends Controller {
         $product = $this->model->whereId($id)->first();
         return response()->json(compact('product'));
     }
+  
+  
+ 
 
     /**
      * Show the form for editing the specified resource.
@@ -98,7 +101,10 @@ class ProductsController extends Controller {
     public function update(ProductsRequest $request, $id) {
         $data = $request->except('_method');
         if ($request->file('image')) {
-            $data['image'] = '/storage/' . $request->file('image')->store('products');
+          
+          $filename = $request->file('image')->getClientOriginalName();
+          
+            $data['image'] = '/storage/' . $request->file('image')->storeAs('products', $filename);
         }
         $success = $this->model->whereId($id)->update($data);
         return response()->json(compact('success'));
@@ -163,14 +169,43 @@ class ProductsController extends Controller {
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function upload(ProductsImportRequest $request) {
+  /*ORIGINELE UPLOAD 20180101 file*/
+//     public function upload(ProductsImportRequest $request) {
+//         $file = $request->file('sheet');
+//         $products = [];
+//         $cat = '';
+//         $sub = '';
+//         Excel::load($file)->noHeading()->each(function ($row) use (&$products, &$cat, &$sub) {
+//             if ($row[5]) {
+//                 $product = ['title' => $row[5], 'image' => $row[6]];
+//                 if ($row[1]) {
+//                     $cat = $row[1];
+//                     $products[$cat] = [];
+//                     $sub = '';
+//                     if (!$row[3]) $sub = 'no_sub';
+//                 };
+//                 if ($row[3] && $sub != 'no_sub') {
+//                     $sub = $row[3];
+//                     $products[$cat][$sub] = [];
+//                 };
+//                 if ($sub && $sub != 'no_sub')
+//                     $products[$cat][$sub][] = $product;
+//                 else
+//                     $products[$cat][] = $product;
+//             }
+//         });
+//         return response()->json(compact('products'));
+//     }
+  
+  
+      public function upload(ProductsImportRequest $request) {
         $file = $request->file('sheet');
         $products = [];
         $cat = '';
         $sub = '';
         Excel::load($file)->noHeading()->each(function ($row) use (&$products, &$cat, &$sub) {
             if ($row[5]) {
-                $product = ['title' => $row[5], 'image' => $row[6]];
+                $product = ['title' => $row[5], 'toorder' => $row[6], 'image' => $row[7]];
                 if ($row[1]) {
                     $cat = $row[1];
                     $products[$cat] = [];
@@ -234,8 +269,8 @@ class ProductsController extends Controller {
      * @return mixed
      */
     public function saveProduct($item, &$sortingId) {
-        $item['description'] = '';
-        $item['image'] = $item['image'] ? '/storage/products/' . substr($item['image'], strrpos($item['image'], '\\') + 1) : '';
+        $item['description'] = '';        
+        $item['image'] = $item['image'] ? '/storage/products/' . substr($item['image'], strrpos($item['image'], '/') + 1) : '';
         $item['sorting_id'] = ++$sortingId;
         return $this->model->create($item);
     }

@@ -1,13 +1,16 @@
 <template>
     <main class="front">
-        <section class="banner">
+        <section class="banner" id="home">
             <div class="container">
                 <div class="col-md-7 col-sm-12">
                     <h1>Zuivelhandel Els en Wim</h1>
+                   
                     <p>Zuivelhandel Els & Wim doet leveringen aan huis van zuivel-, drank- en voedingsproducten. Ook overdag als u niet thuis bent. Deze leveringen worden persoonlijk door Els of Wim verzorgd, om de 2 weken of op bestelling, volgens een vaste ronde en dit aan particulieren, scholen en bedrijven.</p>
                     <p>Onder het motto “wie afval vermijdt, hoeft het niet kwijt”, brengen wij graag zoveel mogelijk producten in herbruikbaar glas aan huis en zetten alles met de glimlach op de gewenste plaats.</p>
                     <p>Met onze slogan “Graag gebracht”, zorgen wij ervoor dat onze klanten alweer een beetje minder moeten aansleuren en meer tijd hebben voor de dingen die ze wel graag doen.</p>
-                    <a href="#" class="button">ontdek ons aanbod ></a>
+                    <router-link v-if="user" to="/aanbod" class="button">ontdek ons aanbod</router-link>
+                    <router-link v-else to="/aanbod-gast" class="button">ontdek ons aanbod</router-link>
+                    
                 </div>
             </div>
         </section>
@@ -18,17 +21,24 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <h3>Wat?</h3>
-                        <p>Leveringen aan huis volgens een vaste ronde.</p>
+                        <ul>
+                          <li>Leveringen aan huis volgens een vaste ronde</li>
+                          <li>Leveringen van zuivel-, drank- en voedingsproducten</li>
+                        </ul>
 
                         <h3>Wanneer?</h3>
-                        <p>Bedeling om de 2 of 4 weken, of op bestelling<br>
-                            Steeds op een vaste dag, steeds op +/- hetzelfde uur</p>
+                        <ul>
+                          <li>Bedeling om de 2 of 4 weken, of op bestelling</li>
+                          <li>Steeds op een vaste dag, steeds op +/- hetzelfde uur</li>
+                        </ul>
 
                         <h3>Wie?</h3>
-                        <p>Particulieren<br>
-                            Scholen<br>
-                            Kinderopvang/crèches<br>
-                            Bedrijven</p>
+                        <ul>
+                          <li>Particulieren</li>
+                            <li>Scholen</li>
+                            <li>Kinderopvang/crèches</li>
+                            <li>Bedrijven</li>
+                          </ul>
 
                         <h3>Hoe bestellen?</h3>
                         <ul>
@@ -52,18 +62,23 @@
                         <h3>Welke producten?</h3>
                         <ul>
                             <li>Productenfolder</li>
-                            <li>Zie website “AANBOD”</li>
+                            <li>
+                            
+                            <router-link v-if="user" to="/aanbod" class="button">zie website "AANBOD"</router-link>
+                            <router-link v-else to="/aanbod-gast" class="button">zie website "AANBOD"</router-link>
+                            
+                            </li>
                         </ul>
 
                         <h3>Niet thuis? … Geen probleem</h3>
                         <ul>
-                            <li>Wij zetten alles op de afgesproken plaats</li>
-                            <li>ZVia sleutel of code zetten wij alles binnen, desnoods op zijn plaats</li>
+                           <li>Wij zetten alles op de afgesproken plaats</li>
+                           <li>Met een sleutel of toegangscode zetten wij indien gewenst, alles binnen, desnoods op zijn plaats.</li>
                         </ul>
 
                         <h3> In jouw dorp?</h3>
                         <ul>
-                            <li>Zie website “REGIO’S”</li>
+                            <li>Ga snel naar : <a href="/#regios">regio's</a></li>
                             <li>Leveringen buiten de bestaande rondes mogelijk volgens afspraak</li>
                         </ul>
                     </div>
@@ -74,14 +89,14 @@
         <section class="map" id="regios">
             <h2>Leveren we ook in jouw buurt?</h2>
             <div class="container-fluid">
-                <img src="/images/map.png" alt="map">
+                <img src="/images/mapje.png" alt="map" style="width:50%">
             </div>
         </section>
 
         <section class="history" id="geschiedenis">
             <div class="container-fluid">
-                <h2>Geschiedenis</h2>
-                <img src="/images/history.png" alt="history">
+                <h2>Geschiedenis - drie generaties melkboer...</h2>
+                <hooper-slider></hooper-slider>
             </div>
             <div class="container">
                 <p>
@@ -110,15 +125,21 @@
 </template>
 
 <script>
+    import HooperSlider from './HooperSlider.vue'
     export default {
-        name: "Home"
+        name: "Home",
+        components: {HooperSlider}        
     }
+    
+    
+    
 </script>
 
 <style scoped>
     section.banner {
         background: url("/images/banner.jpg") no-repeat center;
         background-size: cover;
-        padding: 145px 0 85px;
+        
     }
+    
 </style>

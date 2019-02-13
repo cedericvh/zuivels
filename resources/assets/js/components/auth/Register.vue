@@ -20,8 +20,26 @@
                     <div class="card-header">Registreer je</div>
                     <div class="card-body">
                     <p>Beste bezoeker,<br>
-                  Op deze pagina kan je jezelf registreren.  Onze werkwijze is als volgt :
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel elit leo. Vestibulum congue sem magna, lacinia malesuada augue fringilla vel. Vestibulum et metus erat. Phasellus nec scelerisque est, ut posuere tortor. Donec ac urna eros. Pellentesque vehicula ante metus, nec gravida risus efficitur ut. Vivamus ac hendrerit sapien, a condimentum orci. Curabitur ac eros maximus, euismod purus ut, ullamcorper dui. In a nunc dictum, ultrices mauris nec, molestie risus. Nam nec justo dapibus massa elementum accumsan.</p>
+                  
+                  
+                  Op deze pagina kan je jezelf registreren. Onze werkwijze is als volgt:</p>
+                  <ul>
+                  <li>Je vult onderstaande gegevens in en druk op registreer.</li>
+                  <li>Na een registratieaanvraag bekijken wij of het om een bestaande klant of een nieuwe klant gaat.</li>
+                  <li>In geval van een bestaande klant koppelen wij deze aan de juiste ronde en activeren wij zijn login.</li>
+                  <li>In geval van een nieuwe klant bekijken wij in welke ronde deze kan geïntegreerd worden, nemen contact op om enkele afspraken te maken en activeren zijn login.</li>
+                  </ul>
+
+                  <p>Eens je een bevestiging van je registratie hebt ontvangen via mail, kan je inloggen.</p>
+                  <p>Eens ingelogd, kan je:</p>
+                  <ul>
+                  <li>online bestellingen doorgeven voor de volgende levering</li>
+                  <li>een herhalende bestelling, gebaseerd op vorige bestellingen, doorgeven</li>
+                  <li>de leveringsdatums van Uw ronde bekijken in PDF</li>
+                  <li>onze laatste productenlijst opvragen in PDF</li>
+                  </ul>
+                  
+                    
                         <form @submit.prevent="submit">
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Naam</label>
@@ -56,16 +74,20 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Bevestig paswoord</label>
+                                <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">Bevestig paswoord</label>
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" v-model="newUser.password_confirmation">
+                                    <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" v-model="newUser.password_confirmation">
+                                    <span class="invalid-feedback" v-if="errors.password_confirmation">
+                                        <strong>{{ errors.password_confirmation[0] }}</strong>
+                                    </span>
+                                    
                                 </div>
                             </div>
                             <hr>
                             <div class="form-group row" style="display:none;">
                                 <label for="country" class="col-md-4 col-form-label text-md-right">Country</label>
                                 <div class="col-md-6">
-                                    <input id="country" type="text" class="form-control" value="België" name="country" :class="{ 'is-invalid': errors['address.country'] }" v-model="newUser.address.country">
+                                    <input id="country" type="text" class="form-control" name="country" :class="{ 'is-invalid': errors['address.country'] }" v-model="newUser.address.country">
                                     <span class="invalid-feedback" v-if="errors['address.country']">
                                         <strong>{{ errors['address.country'][0] }}</strong>
                                     </span>
@@ -98,6 +120,15 @@
                                     </span>
                                 </div>
                             </div>
+<div class="form-group row">
+                                <label for="telephone" class="col-md-4 col-form-label text-md-right">Telefoonnummer</label>
+                                <div class="col-md-6">
+                                    <input id="telephone" type="text" class="form-control " name="telephone" :class="{ 'is-invalid': errors['address.telephone'] }" v-model="newUser.address.telephone">
+                                    <span class="invalid-feedback" v-if="errors['address.telephone']">
+                                        <strong>{{ errors['address.telephone'][0] }}</strong>
+                                    </span>
+                                </div>
+                            </div>                            
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -126,10 +157,11 @@
                     email: '',
                     password: '',
                     address: {
-                        country: '',
+                        country: 'België',
                         city: '',
                         address1: '',
-                        address2: ''
+                        address2: '',
+                        telephone: ''
                     }
                 }
             }
@@ -146,7 +178,10 @@
                     this.errors = error.response.data.errors
                 })
             }
-        }
+        },
+
+        
+        
     }
 </script>
 

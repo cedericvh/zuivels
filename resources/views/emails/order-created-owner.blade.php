@@ -1,12 +1,21 @@
 @component('mail::message')
-# Order Created
 
-New order has been created!<br>
+  # Een nieuw order
 
-@component('mail::button', ['url' => url('/admin/orders')])
-    View Orders
-@endcomponent
+  Er werd een bestelling gedaan vanop de site :<br>
 
-Thanks,<br>
-{{ config('app.name') }}
+  @foreach ($orderData['products'] as $product)
+      {{ $product['quantity'] }} {{ $product['title'] }}
+  @endforeach
+
+  Naam klant : {{$orderData['name']}}
+
+  Adres : {{$orderData['address2']}}, {{$orderData['address1']}} {{$orderData['city']}}
+  
+  Telephone : {{$orderData['telephone']}}
+
+  Ronde : {{$orderData['shippinground']}}
+
+  Extra opmerking :  {{$orderData['remark']}}
+
 @endcomponent

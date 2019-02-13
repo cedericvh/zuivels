@@ -23,6 +23,7 @@
                         <tr>
                             <th></th>
                             <th>Naam</th>
+                            <th>Te bestellen</th>
                             <th>Category</th>
                             <th></th>
                         </tr>
@@ -35,6 +36,11 @@
                                         {{ product.title }}
                                     </router-link>
                                 </td>
+                                <td>
+                                    
+                                        {{ product.toorder }}
+                                    
+                                </td>                                
                                 <td>
                                     <product-category-select :product="product" :categories="categories"></product-category-select>
                                 </td>

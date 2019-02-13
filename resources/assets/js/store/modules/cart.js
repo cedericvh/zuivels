@@ -6,8 +6,10 @@ const state = {
 // getters
 const getters = {
     cartProducts: (state, getters, rootState) => {
-        if (!rootState.products.all.length) return []
-        return state.added.map(({id, quantity}) => {
+        //if (!rootState.products.all.length) return []
+        
+           
+            return state.added.map(({id, quantity}) => {
             const product = rootState.products.all.find(product => product.id === id)
             return {id, title: product.title, image: product.image, quantity}
         })

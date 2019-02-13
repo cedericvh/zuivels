@@ -69,6 +69,26 @@ class CallapiController extends Controller {
         return response()->json(['status' => 200, 'products' => array_values($products->toArray())]);
     }
 
+  
+  
+      /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function apiSearchProducts(Request $request) {
+      
+        //var_dump($request->all());
+        $keyword = $request->all();
+        $searchstring = $keyword['searchstring'];
+        $products =  Product::where('title', 'like', '%'.$searchstring.'%')->get(); 
+      
+        //var_dump($products);
+      
+        return response()->json(['status' => 200, 'products' => array_values($products->toArray())]);
+    } 
+  
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

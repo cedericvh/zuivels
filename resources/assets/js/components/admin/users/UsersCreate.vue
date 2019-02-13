@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <form @submit.prevent="submit">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Naam</label>
                             <input type="text" name="name" id="name" class="form-control" v-model="newUser.name" :class="{ 'is-invalid': errors.name }">
                             <span class="invalid-feedback" v-if="errors.name">
                                 <strong>{{ errors.name[0] }}</strong>
@@ -30,7 +30,49 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <label for="password">Roles</label>
+                            <label for="address2">Straat & Huisnummer</label>
+                            <input type="address2" name="address2" id="address2" class="form-control" v-model="newUser.address.address2" :class="{ 'is-invalid': errors.address2 }">
+                            <span class="invalid-feedback" v-if="errors.address2">
+                                <strong>{{ errors.address2[0] }}</strong>
+                            </span>
+                        </div>  
+                        <div class="form-group">
+                            <label for="address1">Postcode</label>
+                            <input type="address1" name="address1" id="address1" class="form-control" v-model="newUser.address.address1" :class="{ 'is-invalid': errors.address1 }">
+                            <span class="invalid-feedback" v-if="errors.address1">
+                                <strong>{{ errors.address1[0] }}</strong>
+                            </span>
+                        </div> 
+                        <div class="form-group">
+                            <label for="city">Gemeente</label>
+                            <input type="city" name="city" id="city" class="form-control" v-model="newUser.address.city" :class="{ 'is-invalid': errors.city }">
+                            <span class="invalid-feedback" v-if="errors.city">
+                                <strong>{{ errors.city[0] }}</strong>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Telefoon</label>
+                            <input type="text" name="telephone" id="telephone" class="form-control" v-model="newUser.address.telephone" :class="{ 'is-invalid': errors.telephone }">
+                            <span class="invalid-feedback" v-if="errors.telephone">
+                                <strong>{{ errors.telephone[0] }}</strong>
+                            </span>
+                        </div> 
+                        <div class="form-group">
+                            <label for="fax">Fax</label>
+                            <input type="text" name="fax" id="fax" class="form-control" v-model="newUser.address.fax" :class="{ 'is-invalid': errors.fax }">
+                            <span class="invalid-feedback" v-if="errors.fax">
+                                <strong>{{ errors.fax[0] }}</strong>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="fax">Opmerking</label>
+                            <input type="text" name="remark" id="remark" class="form-control" v-model="newUser.address.remark" :class="{ 'is-invalid': errors.remark }">
+                            <span class="invalid-feedback" v-if="errors.remark">
+                                <strong>{{ errors.remark[0] }}</strong>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="roles">Rollen</label>
                             <multiselect :options="roles"
                                          v-model="newUser.roles"
                                          track-by="id"
@@ -39,6 +81,15 @@
                                          :hideSelected="true"
                             ></multiselect>
                         </div>
+                        <div class="form-group">
+                            <label for="shippingrounds">Leveringsronde</label>
+                            <multiselect :options="shippingrounds"
+                                         v-model="newUser.shippingrounds"
+                                         track-by="id"
+                                         label="name"
+                                         :hideSelected="true"
+                            ></multiselect>
+                        </div>                        
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Aanpassen</button>
                         </div>
@@ -56,7 +107,10 @@
         name: "UsersCreate",
         data() {
             return {
-                newUser: {},
+                newUser: {
+                  address: {},
+                },
+                shippingrounds:[],
                 roles: [],
                 errors: {}
             }
@@ -65,6 +119,7 @@
         methods: {
             fetchData() {
                 axios.get('/roles').then(response => this.roles = response.data.roles)
+                axios.get('/shippingrounds').then(response => this.shippingrounds = response.data.shippingrounds)
             },
             submit() {
                 axios.post('/users', this.newUser)
