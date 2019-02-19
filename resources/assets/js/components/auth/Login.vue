@@ -25,9 +25,9 @@
                         <li>de leveringsdatums van Uw ronde bekijken in PDF</li>
                         <li>onze laatste productenlijst opvragen in PDF</li>
                         </ul>
-                        
+
                         Ben je hier volledig nieuw, dan kan je jezelf registreren op <a href="/register">deze pagina</a>.
-                          
+
                         </p>
                         <div class="alert alert-danger" v-if="error.message">
                             <strong>Error!</strong> {{ error.message }}.
@@ -61,6 +61,9 @@
                                     </button>
                                     <router-link to="/register" class="btn btn-link">
                                         Registreer
+                                    </router-link>
+                                    <router-link to="/password/reset" class="btn btn-link">
+                                        Forgot Password
                                     </router-link>
                                 </div>
                             </div>

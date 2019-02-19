@@ -27,6 +27,8 @@ import Shippingrounds from '../components/admin/shippingrounds/Shippingrounds.vu
 import ShippingroundsCreate from '../components/admin/shippingrounds/ShippingroundsCreate.vue'
 import ShippingroundsEdit from '../components/admin/shippingrounds/ShippingroundsEdit.vue'
 import Orders from '../components/admin/orders/Orders.vue'
+import ResetPassword from '../components/auth/ResetPassword'
+import ResetPasswordForm from '../components/auth/ResetPasswordForm'
 
 Vue.use(VueRouter)
 
@@ -36,7 +38,9 @@ const router = new VueRouter({
         // Auth
         {path: '/login', component: Login, meta: {guest: true}},
         {path: '/register', component: Register, meta: {guest: true}},
-        {path: '/userprofile/:id/edit',  name:'userprofile', component: UserProfile, meta: {auth: true}, props: true}, 
+        {path: '/password/reset', component: ResetPassword, meta: {guest: true}},
+        {path: '/password/reset/:token', component: ResetPasswordForm, meta: {guest: true}, props: true},
+        {path: '/userprofile/:id/edit',  name:'userprofile', component: UserProfile, meta: {auth: true}},
 
         // Client
         {path: '/', name:'home', component: Home},
@@ -44,7 +48,7 @@ const router = new VueRouter({
         {path: '/aanbod',  name:'aanbod', component: ProductList, meta: {auth: true}},
         {path: '/winkelmandje',  name:'winkelmandje', component: Cart, meta: {auth: true}},
         {path: '/checkout',  name:'checkout', component: Checkout, meta: {auth: true, productsInBag: true}},
-       
+
 
         // Admin
         {path: '/admin', component: AdminHome, meta: {admin: true}},
@@ -57,7 +61,7 @@ const router = new VueRouter({
         {path: '/admin/users/:id/edit', component: UsersEdit, meta: {admin: true}, props: true},
         {path: '/admin/shippingrounds', component: Shippingrounds, meta: {admin: true}},
         {path: '/admin/shippingrounds/create', component: ShippingroundsCreate, meta: {admin: true}},
-        {path: '/admin/shippingrounds/:id/edit', component: ShippingroundsEdit, meta: {admin: true}, props: true},      
+        {path: '/admin/shippingrounds/:id/edit', component: ShippingroundsEdit, meta: {admin: true}, props: true},
         {path: '/admin/orders', component: Orders, meta: {admin: true}},
         {path: '/admin/products/import', component: ProductsImport, meta: {admin: true}},
     ],

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class PasswordReset extends Mailable {
     use Queueable, SerializesModels;
+    public $token;
 
     /**
      * Create a new message instance.

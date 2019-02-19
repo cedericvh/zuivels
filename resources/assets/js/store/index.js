@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import * as Cookies from 'js-cookie'
 import auth from './modules/auth'
 import products from './modules/products'
 import cart from './modules/cart'
@@ -24,8 +25,14 @@ export default new Vuex.Store({
     strict: debug,
     plugins: [
         createPersistedState({
-            storage: window.localStorage,
-            paths: ['cart', 'categories','products','auth']
+            storage: {
+                getItem: key => Cookies.get(key),
+                setItem: (key, value) => Cookies.set(key, value, {
+                    expires: 3,
+                    secure: process.env.NODE_ENV === 'production'
+                }),
+                removeItem: key => Cookies.remove(key)
+            }
         })
-    ],
+    ]
 })

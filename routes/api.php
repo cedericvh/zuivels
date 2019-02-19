@@ -17,11 +17,16 @@ Route::post('/register', 'AuthController@register')->middleware('guest');
 Route::post('/submit', 'ContactFormController@submit')->middleware('guest');
 Route::post('/oauth/token', 'AuthController@issueUserToken');
 
+// Password Reset Routes...
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::get('password/email/{token}', 'Auth\ResetPasswordController@email');
+
 
 
 Route::middleware('auth:api')->group(function ($router) {
     $router->get('/logout', 'AuthController@logout');
-    $router->resource('/users', 'UsersController');  
+    $router->resource('/users', 'UsersController');
     $router->get('/user', 'AuthController@showUser');
 
     $router->post('/userdata', 'Api\CallapiController@apiFetchUserData');
@@ -31,19 +36,11 @@ Route::middleware('auth:api')->group(function ($router) {
     $router->resource('/products', 'ProductsController')->only(['index', 'show']);
     $router->resource('/orders', 'OrdersController')->only(['store']);
     $router->get('/orders/latest', 'OrdersController@latest');
-  
-  
-  // Password Reset Routes...
-    $router->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-    $router->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    $router->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-    $router->post('password/reset', 'Auth\ResetPasswordController@reset');
-     
 
     $router->group(['middleware' => 'admin'], function ($router) {
         $router->resource('/products', 'ProductsController')->except(['index', 'show']);
-        
-        $router->resource('/shippingrounds', 'ShippingroundsController'); 
+
+        $router->resource('/shippingrounds', 'ShippingroundsController');
         $router->get('/shippingrounds/sort/{oldId}/{newId}', 'ShippingroundsController@sort');
         $router->resource('/roles', 'RolesController');
         $router->resource('/orders', 'OrdersController')->except(['store']);

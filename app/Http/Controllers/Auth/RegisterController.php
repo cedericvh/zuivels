@@ -49,7 +49,7 @@ class RegisterController extends Controller {
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            
+
         ]);
     }
 
@@ -64,17 +64,17 @@ class RegisterController extends Controller {
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            
+
         ]);
         $user
             ->roles()
             ->attach(Role::where('name', 'customer')->first());
-      
-        $user
-            ->addresses = new Address();
-            ->addresses->city = $data['city']
-            
-        
+
+//        $user
+//            ->addresses = new Address();
+//            ->addresses->city = $data['city']
+
+
         return $user;
     }
 }

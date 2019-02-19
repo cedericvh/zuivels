@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller {
     /*
@@ -33,5 +36,38 @@ class ResetPasswordController extends Controller {
      */
     public function __construct() {
         $this->middleware('guest');
+    }
+
+    /**
+     * @param $response
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function email($token) {
+        $email = PasswordReset::all()->first(function ($item) use ($token) {
+            return Hash::check($token, $item->token);
+        });
+
+        return response()->json(['email' => $email ? $email->value('email') : 'Token not found'], $email ? 200 : 402);
+    }
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * @param  string $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetResponse($response) {
+        return response()->json(['status' => trans($response)]);
+    }
+
+    /**
+     * Get the response for a failed password reset.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response) {
+        return response()->json(['email' => trans($response)], 402);
     }
 }

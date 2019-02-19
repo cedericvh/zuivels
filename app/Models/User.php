@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\CustomResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -51,7 +52,7 @@ class User extends Authenticatable {
     public function address() {
         return $this->hasOne(Address::class);
     }
-  
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -101,5 +102,14 @@ class User extends Authenticatable {
     public function getIsAdminAttribute() {
         return $this->hasRole('admin');
     }
-  
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token) {
+        $this->notify(new CustomResetPassword($token));
+    }
 }
