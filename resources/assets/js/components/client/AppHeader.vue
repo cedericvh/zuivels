@@ -7,10 +7,10 @@
 
             <div class="col-md-8 col-sm-12">
                 <div class="top d-none d-md-block">
-                    
+
                     <router-link v-if="user" :to="`/userprofile/${user.id}/edit`">{{user.name}}</router-link>
                     <router-link v-else :to="`/aanbod-gast`">aanbod</router-link>
-                    - 
+                    -
                     <router-link v-if="user" :to="`/winkelmandje`">winkelwagen <span style="font-size:70%;">({{cartProductsQuantity}})</span></router-link>
                     <router-link v-else :to="`/register`">Registreer</router-link>
                     -
@@ -38,11 +38,11 @@
                                 <router-link class="nav-link" v-else to="#regios" v-smooth-scroll="{ duration: 1000, offset: -50}">regio's</router-link>
                             </li>
                             <li class="nav-item">
-                               
-                                
+
+
                                 <router-link class="nav-link" v-if="hashorurl" to="/#geschiedenis" v-smooth-scroll="{ duration: 1000, offset: -50}">geschiedenis</router-link>
                                 <router-link class="nav-link" v-else to="#geschiedenis" v-smooth-scroll="{ duration: 1000, offset: -50}">geschiedenis</router-link>
-                                
+
                             </li>
                             <li class="nav-item">
                                 <router-link class="nav-link" v-if="user" to="/aanbod">aanbod</router-link>
@@ -70,16 +70,16 @@
                 return this.$store.getters.cartProductsQuantity
             },
             hashorurl(){
-                
-                
+
+
                 if(this.$route.path != "/"){
-                
+
                 return true;
-                
+
                 }
-            
+
             }
-            
+
         },
         methods: {
             logout() {
@@ -92,22 +92,22 @@
                 })
             }
         },
-        
+
     }
-    
-    
+
+
 </script>
 
 <style scoped>
     header.site-header .navbar-nav .nav-link.router-link-exact-active:after {
         background-color: #c1e473;
     }
-    
+
     .cursor {
-    
+
     cursor:pointer;
-    
+
     }
- 
-    
+
+
 </style>

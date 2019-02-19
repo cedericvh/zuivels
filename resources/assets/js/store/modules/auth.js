@@ -7,7 +7,7 @@ const state = {
 // getters
 const getters = {
     accessToken: state => state.accessToken,
-    user: state => state.user,
+    user: state => state.user
 }
 
 // actions
@@ -21,8 +21,32 @@ const actions = {
     setUser ({ commit, state }, user) {
         commit('setUser', user)
     },
-    destroyUser({commit, state}) {
+    destroyUser ({ commit, state }) {
         commit('setUser', null)
+    },
+
+    fetchData ({ commit, dispatch, state }) {
+        return new Promise((resolve, reject) => {
+            if (state.accessToken) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${state.accessToken}`
+            } else {
+                return resolve(null)
+            }
+            axios.get('/user').then(response => {
+                if (response.data.user) {
+                    commit('setUser', response.data.user)
+                    resolve(response.data.user)
+                } else {
+                    dispatch('destroyAccessToken')
+                    dispatch('destroyUser')
+                    resolve(null)
+                }
+            }).catch(() => {
+                dispatch('destroyAccessToken')
+                dispatch('destroyUser')
+                resolve(null)
+            })
+        })
     }
 }
 

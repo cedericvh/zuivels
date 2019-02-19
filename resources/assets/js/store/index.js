@@ -32,7 +32,8 @@ export default new Vuex.Store({
                     secure: process.env.NODE_ENV === 'production'
                 }),
                 removeItem: key => Cookies.remove(key)
-            }
+            },
+            paths: ['cart', 'categories', 'products', 'auth']
         })
     ]
 })
