@@ -47,7 +47,7 @@ class ResetPasswordController extends Controller {
             return Hash::check($token, $item->token);
         });
 
-        return response()->json(['email' => $email ? $email->value('email') : 'Token not found'], $email ? 200 : 402);
+        return response()->json(['email' => $email ? $email->email : 'Token not found'], $email ? 200 : 402);
     }
 
     /**
