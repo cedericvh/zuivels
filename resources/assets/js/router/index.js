@@ -37,7 +37,7 @@ const router = new VueRouter({
         { path: '/login', component: Login, meta: { guest: true } },
         { path: '/register', component: Register, meta: { guest: true } },
         { path: '/password/reset', component: ResetPassword, meta: { guest: true } },
-        { path: '/password/reset/:token', component: ResetPasswordForm, meta: { guest: true } },
+        { path: '/password/reset/:token', component: ResetPasswordForm, meta: { guest: true }, props: true  },
         { path: '/userprofile/:id/edit', name: 'userprofile', component: UserProfile, meta: { auth: true }, props: true },
 
         // Client
