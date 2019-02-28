@@ -4,7 +4,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Reset Password</div>
+                        <div class="card-header">Paswoord resetten</div>
                         <div class="card-body">
                             <div class="alert" :class="alert.type === 'success' ? 'alert-success' : 'alert-danger'" v-if="alert.message">
                                 <strong>{{alert.type === 'success' ? 'Success' : 'Error'}}!</strong> {{ alert.message }}.
@@ -19,7 +19,7 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Send
+                                            Paswoord link verzenden
                                         </button>
                                         <router-link to="/login" class="btn btn-link">
                                             Login

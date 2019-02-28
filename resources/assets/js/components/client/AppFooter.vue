@@ -47,6 +47,10 @@
                 </div>
             </div>
         </div>
+        <div class="text-center">
+        <br><br>
+        Zuivelhandel Els en Wim &copy; 2019 - <a href="/images/documents/Privacy Statement en cookiebeleid Zuivelhandel.pdf" target="_blank">Privacy en disclaimer</a>
+        </div>
     </footer>
 </template>
 

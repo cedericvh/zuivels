@@ -4,7 +4,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Reset Password</div>
+                        <div class="card-header">Paswoord resetten</div>
                         <div class="card-body">
                             <div class="alert" :class="alert.type === 'success' ? 'alert-success' : 'alert-danger'" v-if="alert.message">
                                 <strong>{{alert.type === 'success' ? 'Success' : 'Error'}}!</strong> {{ alert.message }}.
@@ -18,7 +18,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="password_confirmation" class="col-sm-4 col-form-label text-md-right">Confirm Password</label>
+                                    <label for="password_confirmation" class="col-sm-4 col-form-label text-md-right">Paswoord bevestigen</label>
                                     <div class="col-md-6">
                                         <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autofocus v-model="data.password_confirmation">
                                     </div>
@@ -26,7 +26,7 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Reset
+                                            Opnieuw instellen
                                         </button>
                                         <router-link to="/login" class="btn btn-link">
                                             Login

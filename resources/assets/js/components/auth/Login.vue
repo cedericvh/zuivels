@@ -63,7 +63,7 @@
                                         Registreer
                                     </router-link>
                                     <router-link to="/password/reset" class="btn btn-link">
-                                        Forgot Password
+                                        Paswoord vergeten
                                     </router-link>
                                 </div>
                             </div>
