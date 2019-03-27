@@ -6620,6 +6620,11 @@ vue-bootstrap-datetimepicker@^5.0.0-beta.2:
   dependencies:
     pc-bootstrap4-datetimepicker "^4.17.50"
 
+vue-disable-autocomplete@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/vue-disable-autocomplete/-/vue-disable-autocomplete-0.0.4.tgz#6318b515ade128247038121f33a6586c1d0899e8"
+  integrity sha512-NtEMoepVfFScR6f7d37g3tQh3F5VU75ai+5+GHoQ0pt3ftrLUeOWXi0ozQDExTwPFgLK3Yk86NeyokSZMlXvFg==
+
 vue-hot-reload-api@^2.2.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.2.tgz#1fcc1495effe08a790909b46bf7b5c4cfeb6f21b"

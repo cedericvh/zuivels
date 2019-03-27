@@ -144,12 +144,12 @@
             this.order.address2 = this.$store.getters.user.address.address2 ? this.$store.getters.user.address.address2 : ''
             this.order.telephone = this.$store.getters.user.address.telephone ? this.$store.getters.user.address.telephone : ''
             this.order.name = this.$store.getters.user.name ? this.$store.getters.user.name : ''
-            this.order.shippinground = this.$store.getters.user.shippinground.name ? this.$store.getters.user.shippinground.name : ''
-            this.order.shippingrounddescription = this.$store.getters.user.shippinground.description ? this.$store.getters.user.shippinground.description : ''
-            this.order.shippingroundfile1 = this.$store.getters.user.shippinground.file1 ? this.$store.getters.user.shippinground.file1 : ''
-            this.order.shippingroundfile2 = this.$store.getters.user.shippinground.file2 ? this.$store.getters.user.shippinground.file2 : ''
-            this.order.shippingroundfile3 = this.$store.getters.user.shippinground.file3 ? this.$store.getters.user.shippinground.file3 : ''
-            
+            this.order.shippinground = this.$store.getters.user.shippinground && this.$store.getters.user.shippinground.name ? this.$store.getters.user.shippinground.name : ''
+            this.order.shippingrounddescription = this.$store.getters.user.shippinground && this.$store.getters.user.shippinground.description ? this.$store.getters.user.shippinground.description : ''
+            this.order.shippingroundfile1 = this.$store.getters.user.shippinground && this.$store.getters.user.shippinground.file1 ? this.$store.getters.user.shippinground.file1 : ''
+            this.order.shippingroundfile2 = this.$store.getters.user.shippinground && this.$store.getters.user.shippinground.file2 ? this.$store.getters.user.shippinground.file2 : ''
+            this.order.shippingroundfile3 = this.$store.getters.user.shippinground && this.$store.getters.user.shippinground.file3 ? this.$store.getters.user.shippinground.file3 : ''
+
             this.order.date = Date.now()
         }
     }

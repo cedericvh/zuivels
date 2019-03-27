@@ -10,9 +10,11 @@ import store from './store'
 
 
 import vueSmoothScroll from 'vue2-smooth-scroll'
+import disableAutocomplete from 'vue-disable-autocomplete'
 
 
 Vue.use(vueSmoothScroll)
+Vue.use(disableAutocomplete)
 
 
 

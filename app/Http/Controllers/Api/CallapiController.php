@@ -53,7 +53,7 @@ class CallapiController extends Controller {
      */
     public function apiFetchProducts(Request $request) {
         $categoryIds = $request->all();
-        $products = Product::all();
+        $products = Product::orderBy('sorting_id', 'ASC')->with('categories')->get();
         if (!empty($categoryIds)) {
             $categories = Category::whereIn('id', $categoryIds)->get();
             $products = $products->filter(function ($item) use ($categories) {

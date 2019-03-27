@@ -45,7 +45,7 @@ class OrdersController extends Controller {
         $data['email'] = $request->user()->email;
         $data['dategetorder'] = Carbon::today();
         $data['rejected'] = false;
-        $data['date'] = Carbon::createFromTimestamp($data['date']);
+        $data['date'] = Carbon::createFromTimestamp($data['date']/1000);
         $data['products'] = $request->get('products');
       
         //var_dump($data['products']);
