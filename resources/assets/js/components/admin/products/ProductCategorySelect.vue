@@ -15,6 +15,8 @@
     import Multiselect from 'vue-multiselect'
     export default {
         name: 'ProductCategorySelect',
+        props: ['product', 'categories'],
+
         data() {
             return {
                 selected: this.product.categories
@@ -32,7 +34,6 @@
             }
         },
 
-        props: ['product', 'categories'],
 
         created() {
         }

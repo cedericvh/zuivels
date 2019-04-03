@@ -45,7 +45,7 @@ Route::middleware('auth:api')->group(function ($router) {
         $router->resource('/roles', 'RolesController');
         $router->resource('/orders', 'OrdersController')->except(['store']);
         $router->get('/users/{id}/approve', 'UsersController@approve');
-        $router->get('/products/sort/{oldId}/{newId}', 'ProductsController@sort');
+        $router->post('/products/sort', 'ProductsController@sort');
         $router->post('/products/import/upload', 'ProductsController@upload');
         $router->post('/products/import/save', 'ProductsController@save');
         $router->get('/categories/leaves', 'CategoriesController@indexLeaves');

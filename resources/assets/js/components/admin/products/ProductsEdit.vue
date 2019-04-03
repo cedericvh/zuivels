@@ -28,7 +28,14 @@
                             <span class="invalid-feedback" v-if="errors.description">
                                 <strong>{{ errors.description[0] }}</strong>
                             </span>
-                        </div>                        
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Categorie</label>
+                            <product-category-select v-if="product && categories" :product="product" :categories="categories"></product-category-select>
+                            <span class="invalid-feedback" v-if="errors.description">
+                                <strong>{{ errors.description[0] }}</strong>
+                            </span>
+                        </div>
                         <img :src="product.image" alt="" width="150px">
                         <div class="form-group">
                             <label for="image">Image</label>
@@ -48,14 +55,20 @@
 </template>
 
 <script>
+    import ProductCategorySelect from './ProductCategorySelect'
+
     export default {
         name: "ProductsEdit",
         props: ['id'],
         data() {
             return {
                 errors: {},
-                product: {}
+                product: null,
+                categories: null
             }
+        },
+        components: {
+            ProductCategorySelect
         },
         methods: {
             submit(e) {
@@ -69,11 +82,19 @@
                 }).catch(error => {
                     this.errors = error.response.data.errors
                 })
+            },
+            getCategories() {
+                axios.get('/categories/leaves')
+                .then(response => this.categories = response.data.categories)
+                .catch(response => console.log(response.data))
             }
         },
         mounted() {
             axios.get(`/products/${this.id}/edit`)
             .then(response => this.product = response.data.product)
+        },
+        created() {
+            this.getCategories()
         }
     }
 </script>

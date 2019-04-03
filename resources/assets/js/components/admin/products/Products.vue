@@ -42,7 +42,9 @@
                                     
                                 </td>                                
                                 <td>
-                                    <product-category-select :product="product" :categories="categories"></product-category-select>
+                                    <span class="category" v-for="category in product.categories">
+                                        {{ category.title }}
+                                    </span>
                                 </td>
                                 <td class="text-right">
                                     <router-link :to="`/admin/products/${product.id}/edit`">Aanpassen</router-link>
@@ -58,7 +60,6 @@
 </template>
 
 <script>
-    import ProductCategorySelect from './ProductCategorySelect'
     import Draggable from 'vuedraggable'
 
     export default {
@@ -74,7 +75,6 @@
             }
         },
         components: {
-            ProductCategorySelect,
             Draggable
         },
         methods: {
@@ -87,7 +87,11 @@
                 })
             },
             sorted(e) {
-                axios.get(`/products/sort/${e.oldIndex + 1}/${e.newIndex + 1}`)
+                let productIds = this.products.map(product => {
+                    return product.id
+                })
+
+                axios.post('/products/sort', productIds)
                 .then(response => {
                     if(response.data.success) this.$store.dispatch('getAllProducts')
                 }).catch(response => console.log(response.data))
@@ -121,5 +125,17 @@
 <style scoped>
     .cursor-pointer {
         cursor: pointer;
+    }
+    .category {
+        padding: 4px 10px;
+        border-radius: 5px;
+        margin-right: 10px;
+        color: #fff;
+        line-height: 1;
+        background: #41b883;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 100%;
+        text-overflow: ellipsis;
     }
 </style>

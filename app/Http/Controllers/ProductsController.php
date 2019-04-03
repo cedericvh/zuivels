@@ -88,6 +88,7 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(Product $product) {
+        $product->categories;
         return response()->json(compact('product'));
     }
 
@@ -127,15 +128,19 @@ class ProductsController extends Controller {
      * @param $newId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sort($oldId, $newId) {
-        $product = $this->model->whereSortingId($oldId)->first();
-        $result = $product->update(['sorting_id' => $newId]);
-        $query = $this->model->whereBetween('sorting_id', ($oldId < $newId ? [$oldId, $newId] : [$newId, $oldId]))
-            ->where('id', '!=', $product->id);
-        if ($oldId > $newId) $query->increment('sorting_id');
-        else $query->decrement('sorting_id');
+    public function sort(Request $request) {
+        $sort = $request->all();
+        $products = $this->model->all();
+        $sort = array_flip($sort);
 
-        return response()->json(['success' => $result]);
+        foreach ($products as $product) {
+            if (isset($sort[$product->id])) {
+                $product->sorting_id = $sort[$product->id] + 1;
+                $product->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
     }
 
     /**
